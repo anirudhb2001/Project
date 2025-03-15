@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Codes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px 0 0 6px;
+            font-size: 0.875rem;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+        .filter-bar {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .filter-bar select {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .code-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .code-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-header h3 {
+            color: #1a365d;
+        }
+
+        .language-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            background: #e9f5fe;
+            color: #2563eb;
+        }
+
+        .code-body {
+            max-height: 200px;
+            overflow: auto;
+            background: #f8fafd;
+            border-bottom: 1px solid #eee;
+        }
+
+        .code-body pre {
+            margin: 0;
+            padding: 0;
+        }
+
+        .code-body code {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .code-footer {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-meta {
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #f3f4f6;
+            border-radius: 6px 6px 0 0;
+            font-size: 0.875rem;
+            cursor: pointer;
+            margin-right: 2px;
+        }
+
+        .tab.active {
+            background: #fff;
+            font-weight: bold;
+            color: #2563eb;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Faculty Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="faculty dashboard.html" class="menu-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Dashboard
+            </a>
+            <a href="facultyproj.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="facultylab.html" class="menu-item">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="facultycode.html" class="menu-item active">
+                <i class="fas fa-code"></i>
+                Codes
+            </a>
+            <a href="facultyfeedbck.html" class="menu-item">
+                <i class="fas fa-comments"></i>
+                Feedback
+            </a>
+            <a href="facultynot.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Code Repository</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Code
+            </button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search code snippets...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="filter-bar">
+            <select>
+                <option value="">All Languages</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="c++">C++</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+            <select>
+                <option value="">All Courses</option>
+                <option value="cs101">CS 101</option>
+                <option value="cs250">CS 250</option>
+                <option value="cs315">CS 315</option>
+            </select>
+            <select>
+                <option value="">Sort By</option>
+                <option value="date-desc">Date (Newest)</option>
+                <option value="date-asc">Date (Oldest)</option>
+                <option value="name-asc">Name (A-Z)</option>
+            </select>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab active">My Codes</div>
+            <div class="tab">Shared With Me</div>
+            <div class="tab">Course Library</div>
+        </div>
+
+        <div class="code-grid">
+            <div class="code-card">
+                <div class="code-header">
+                    <h3>Bubble Sort</h3>
+                    <span class="language-badge">Python</span>
+                </div>
+                <div class="code-body">
+                    <pre><code class="language-python">
+def bubble_sort(arr):
+    n = len(arr)
+    
+    # Traverse through all array elements
+    for i in range(n):
+        # Last i elements are already in place
+        for j in range(0, n-i-1):
+            # Swap if the element found is greater than the next element
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    
+    return arr
+
+# Example usage
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = bubble_sort(numbers)
+print(sorted_numbers)
+                    </code></pre>
+                </div>
+                <div class="code-footer">
+                    <div class="code-meta">
+                        <div>Created: Feb 20, 2025</div>
+                        <div>Course: CS 250</div>
+                    </div>
+                    <div class="code-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <h3>Binary Search</h3>
+                    <span class="language-badge">Java</span>
+                </div>
+                <div class="code-body">
+                    <pre><code class="language-java">
+public class BinarySearch {
+    // Returns index of x if it is present in arr[],
+    // else return -1
+    int binarySearch(int arr[], int x) {
+        int l = 0, r = arr.length - 1;
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+  
+            // Check if x is present at mid
+            if (arr[m] == x)
+                return m;
+  
+            // If x greater, ignore left half
+            if (arr[m] < x)
+                l = m + 1;
+  
+            // If x is smaller, ignore right half
+            else
+                r = m - 1;
+        }
+  
+        // Element not present
+        return -1;
+    }
+  
+    public static void main(String args[]) {
+        BinarySearch ob = new BinarySearch();
+        int arr[] = { 2, 3, 4, 10, 40 };
+        int n = arr.length;
+        int x = 10;
+        int result = ob.binarySearch(arr, x);
+        if (result == -1)
+            System.out.println("Element not present");
+        else
+            System.out.println("Element found at index " + result);
+    }
+}
+                    </code></pre>
+                </div>
+                <div class="code-footer">
+                    <div class="code-meta">
+                        <div>Created: Feb 18, 2025</div>
+                        <div>Course: CS 250</div>
+                    </div>
+                    <div class="code-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <h3>Simple Web Server</h3>
+                    <span class="language-badge">JavaScript</span>
+                </div>
+                <div class="code-body">
+                    <pre><code class="language-javascript">
+const http = require('http');
+
+// Create a server object
+const server = http.createServer((req, res) => {
+  // Set the response HTTP header with HTTP status and Content type
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  
+  // Send the response body
+  res.end('Hello World! Welcome to Node.js server\n');
+});
+
+// Set the server to listen on port 3000
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(Server running at http://localhost:${PORT}/);
+});
+
+// How to run:
+// 1. Save as server.js
+// 2. Run with: node server.js
+// 3. Open browser to http://localhost:3000
+                    </code></pre>
+                </div>
+                <div class="code-footer">
+                    <div class="code-meta">
+                        <div>Created: Feb 15, 2025</div>
+                        <div>Course: CS 315</div>
+                    </div>
+                    <div class="code-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+</body>
+</html>

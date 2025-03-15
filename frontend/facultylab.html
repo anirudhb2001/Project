@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Lab Manuals</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px 0 0 6px;
+            font-size: 0.875rem;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+
+        .filter-bar {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .filter-bar select {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .manuals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .manual-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .manual-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .manual-header h3 {
+            margin-bottom: 5px;
+            color: #1a365d;
+        }
+
+        .manual-header p {
+            color: #4a5568;
+            font-size: 0.875rem;
+        }
+
+        .manual-body {
+            padding: 15px;
+        }
+
+        .manual-body p {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .manual-footer {
+            padding: 15px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .manual-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #ebf5ff;
+            color: #2563eb;
+            font-size: 0.75rem;
+            margin-right: 5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Faculty Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="faculty dashboard.html" class="menu-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Dashboard
+            </a>
+            <a href="facultyproj.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="facultylab.html" class="menu-item active">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="facultycode.html" class="menu-item">
+                <i class="fas fa-code"></i>
+                Codes
+            </a>
+            <a href="facultyfeedbck.html" class="menu-item">
+                <i class="fas fa-comments"></i>
+                Feedback
+            </a>
+            <a href="facultynot.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Lab Manuals</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Manual
+            </button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search lab manuals...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="filter-bar">
+            <select>
+                <option value="">All Subjects</option>
+                <option value="physics">Physics</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="biology">Biology</option>
+                <option value="computer-science">Computer Science</option>
+            </select>
+            <select>
+                <option value="">All Semesters</option>
+                <option value="fall-2024">Fall 2024</option>
+                <option value="spring-2024">Spring 2024</option>
+                <option value="fall-2023">Fall 2023</option>
+            </select>
+            <select>
+                <option value="">Sort By</option>
+                <option value="date-desc">Date (Newest)</option>
+                <option value="date-asc">Date (Oldest)</option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+            </select>
+        </div>
+
+        <div class="manuals-grid">
+            <div class="manual-card">
+                <div class="manual-header">
+                    <h3>Introduction to Electronics</h3>
+                    <p>Physics 101 • Last updated: Feb 25, 2025</p>
+                </div>
+                <div class="manual-body">
+                    <p>A comprehensive introduction to basic electronic components and circuit design. Includes hands-on experiments for voltage, current, and resistance measurements.</p>
+                    <span class="tag">Electronics</span>
+                    <span class="tag">Circuits</span>
+                </div>
+                <div class="manual-footer">
+                    <span>Used by 94 students</span>
+                    <div class="manual-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-header">
+                    <h3>Data Structures Lab</h3>
+                    <p>CS 250 • Last updated: Feb 20, 2025</p>
+                </div>
+                <div class="manual-body">
+                    <p>Practical implementation of various data structures including linked lists, stacks, queues, trees, and graphs with time complexity analysis.</p>
+                    <span class="tag">Programming</span>
+                    <span class="tag">Algorithms</span>
+                </div>
+                <div class="manual-footer">
+                    <span>Used by 78 students</span>
+                    <div class="manual-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-header">
+                    <h3>Organic Chemistry Lab</h3>
+                    <p>CHEM 220 • Last updated: Feb 15, 2025</p>
+                </div>
+                <div class="manual-body">
+                    <p>Step-by-step procedures for organic synthesis reactions, purification techniques, and spectroscopic analysis methods.</p>
+                    <span class="tag">Chemistry</span>
+                    <span class="tag">Organic</span>
+                </div>
+                <div class="manual-footer">
+                    <span>Used by 65 students</span>
+                    <div class="manual-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-header">
+                    <h3>Microprocessor Systems</h3>
+                    <p>ENG 315 • Last updated: Feb 10, 2025</p>
+                </div>
+                <div class="manual-body">
+                    <p>Laboratory experiments for microprocessor programming, interfacing, and applications in embedded systems design.</p>
+                    <span class="tag">Electronics</span>
+                    <span class="tag">Embedded</span>
+                </div>
+                <div class="manual-footer">
+                    <span>Used by 52 students</span>
+                    <div class="manual-actions">
+                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript functionality could be added here
+    </script>
+</body>
+</html>

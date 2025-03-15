@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Faculty Notifications</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .notification-filter {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .filter-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            color: #4a5568;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .filter-pill.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .filter-pill:hover:not(.active) {
+            background: #f8fafc;
+        }
+
+        .notification-list {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .notification-date-header {
+            padding: 12px 20px;
+            background: #f8fafc;
+            color: #4a5568;
+            font-weight: bold;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .notification-item {
+            display: flex;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .notification-item:hover {
+            background: #f8fafc;
+        }
+
+        .notification-item.unread {
+            background: #eef2ff;
+        }
+
+        .notification-item.unread:hover {
+            background: #e0e7ff;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ebf5ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.submission {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .notification-icon.review {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .notification-icon.system {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .notification-description {
+            color: #4a5568;
+            font-size: 0.875rem;
+            margin-bottom: 5px;
+        }
+
+        .notification-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-time {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        .notification-course {
+            padding: 2px 8px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+            align-items: center;
+        }
+
+        .action-btn {
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            color: #4a5568;
+        }
+
+        .notification-settings {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .settings-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .settings-info h3 {
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+
+        .settings-info p {
+            color: #4a5568;
+            font-size: 0.875rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e2e8f0;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #2563eb;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .load-more {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #2563eb;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .load-more:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Faculty Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="#" class="menu-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Dashboard
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-code"></i>
+                Codes
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-comments"></i>
+                Feedback
+            </a>
+            <a href="#" class="menu-item active">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Notifications</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-check-double"></i> Mark All as Read
+            </button>
+        </div>
+
+        <div class="notification-filter">
+            <div class="filter-pill active">All (18)</div>
+            <div class="filter-pill">Unread (5)</div>
+            <div class="filter-pill">Submissions (8)</div>
+            <div class="filter-pill">Reviews (6)</div>
+            <div class="filter-pill">System (4)</div>
+        </div>
+
+        <div class="notification-list">
+            <div class="notification-date-header">Today</div>
+            
+            <div class="notification-item unread">
+                <div class="notification-icon submission">
+                    <i class="fas fa-file-upload"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">New Assignment Submission</div>
+                    <div class="notification-description">John Doe has submitted Assignment #4: Data Structures Implementation</div>
+                    <div class="notification-meta">
+                        <div class="notification-time">2 hours ago</div>
+                        <div class="notification-course">CS202</div>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <div class="action-btn"><i class="fas fa-check"></i></div>
+                    <div class="action-btn"><i class="fas fa-trash"></i></div>
+                </div>
+            </div>
+
+            <div class="notification-item unread">
+                <div class="notification-icon review">
+                    <i class="fas fa-comment-alt"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Feedback Request</div>
+                    <div class="notification-description">Emma Lee is requesting feedback on her recent project submission</div>
+                    <div class="notification-meta">
+                        <div class="notification-time">4 hours ago</div>
+                        <div class="notification-course">CS101</div>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <div class="action-btn"><i class="fas fa-check"></i></div>
+                    <div class="action-btn"><i class="fas fa-trash"></i></div>
+                </div>
+            </div>
+
+            <div class="notification-item">
+                <div class="notification-icon system">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">System Update</div>
+                    <div class="notification-description">Platform maintenance scheduled for this weekend. Some features may be temporarily unavailable.</div>
+                    <div class="notification-meta">
+                        <div class="notification-time">8 hours ago</div>
+                        <div class="notification-course">System</div>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <div class="action-btn"><i class="fas fa-check"></i></div>
+                    <div class="action-btn"><i class="fas fa-trash"></i></div>
+                </div>
+            </div>
+
+            <div class="notification-date-header">Yesterday</div>
+
+            <div class="notification-item unread">
+                <div class="notification-icon submission">
+                    <i class="fas fa-file-upload"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Multiple Submissions</div>
+                    <div class="notification-description">5 students have submitted Assignment #3 for your review</div>
+                    <div class="notification-meta">
+                        <div class="notification-time">Yesterday at 3:45 PM</div>
+                        <div class="notification-course">CS303</div>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <div class="action-btn"><i class="fas fa-check"></i></div>
+                    <div class="action-btn"><i class="fas fa-trash"></i></div>
+                </div>
+            </div>
+
+            <div class="notification-item">
+                <div class="notification-icon review">
+                    <i

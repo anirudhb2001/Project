@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Faculty Feedback</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .feedback-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .feedback-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            color: #4a5568;
+            border-bottom: 3px solid transparent;
+        }
+
+        .feedback-tab.active {
+            color: #2563eb;
+            border-bottom: 3px solid #2563eb;
+            font-weight: bold;
+        }
+
+        .feedback-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .feedback-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .feedback-header {
+            background: #f8fafc;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        .course-badge {
+            padding: 4px 8px;
+            background: #eef2ff;
+            color: #3730a3;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .feedback-body {
+            padding: 15px;
+        }
+
+        .feedback-content {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .feedback-date {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        .feedback-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        .filter-select {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 5px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            color: #4a5568;
+            cursor: pointer;
+        }
+
+        .page-btn.active {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .page-btn:hover:not(.active) {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Faculty Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="#" class="menu-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Dashboard
+            </a>
+            <a href="facultyproj.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="facultylab.html" class="menu-item">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="facultycode.html" class="menu-item">
+                <i class="fas fa-code"></i>
+                Codes
+            </a>
+            <a href="facultyfeedbck.html" class="menu-item active">
+                <i class="fas fa-comments"></i>
+                Feedback
+            </a>
+            <a href="facultynot.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Student Feedback</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-external-link-alt"></i> Export Feedback
+            </button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search by student name or feedback content..." class="search-input">
+            <select class="filter-select">
+                <option value="all">All Courses</option>
+                <option value="cs101">CS101 - Intro to Programming</option>
+                <option value="cs202">CS202 - Data Structures</option>
+                <option value="cs303">CS303 - Algorithms</option>
+            </select>
+            <select class="filter-select">
+                <option value="all">All Time</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="semester">This Semester</option>
+            </select>
+        </div>
+
+        <div class="feedback-tabs">
+            <div class="feedback-tab active">All Feedback (24)</div>
+            <div class="feedback-tab">Assignments (12)</div>
+            <div class="feedback-tab">Projects (8)</div>
+            <div class="feedback-tab">Lab Manuals (4)</div>
+        </div>
+
+        <div class="feedback-cards">
+            <div class="feedback-card">
+                <div class="feedback-header">
+                    <div class="student-info">
+                        <div class="student-avatar">JD</div>
+                        <div>
+                            <div>John Doe</div>
+                            <div class="course-badge">CS101</div>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                    </div>
+                </div>
+                <div class="feedback-body">
+                    <p class="feedback-content">The lab manual was very helpful in understanding the concepts. However, I found some of the exercises to be too challenging for beginners. It would be great if there were some more intermediate steps.</p>
+                    <div class="feedback-date">2 days ago • Lab Manual #3</div>
+                    <div class="feedback-actions">
+                        <button class="btn btn-secondary">Reply</button>
+                        <button class="btn btn-primary">Resolve</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feedback-card">
+                <div class="feedback-header">
+                    <div class="student-info">
+                        <div class="student-avatar">AS</div>
+                        <div>
+                            <div>Amy Smith</div>
+                            <div class="course-badge">CS202</div>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                    </div>
+                </div>
+                <div class="feedback-body">
+                    <p class="feedback-content">I'm struggling with the last part of the assignment on binary trees. Could you provide additional examples or resources? The current explanation is a bit difficult to follow.</p>
+                    <div class="feedback-date">3 days ago • Assignment #4</div>
+                    <div class="feedback-actions">
+                        <button class="btn btn-secondary">Reply</button>
+                        <button class="btn btn-primary">Resolve</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feedback-card">
+                <div class="feedback-header">
+                    <div class="student-info">
+                        <div class="student-avatar">RJ</div>
+                        <div>
+                            <div>Robert Johnson</div>
+                            <div class="course-badge">CS303</div>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                    </div>
+                </div>
+                <div class="feedback-body">
+                    <p class="feedback-content">The project requirements were clear and I really enjoyed implementing the algorithm. The resources you provided were exceptionally helpful, especially the reference papers.</p>
+                    <div class="feedback-date">5 days ago • Project #2</div>
+                    <div class="feedback-actions">
+                        <button class="btn btn-secondary">Reply</button>
+                        <button class="btn btn-primary">Resolve</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feedback-card">
+                <div class="feedback-header">
+                    <div class="student-info">
+                        <div class="student-avatar">EL</div>
+                        <div>
+                            <div>Emma Lee</div>
+                            <div class="course-badge">CS101</div>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="fas fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                        <i class="far fa-star" style="color: #fbbf24;"></i>
+                    </div>
+                </div>
+                <div class="feedback-body">
+                    <p class="feedback-content">I'm having trouble understanding the code examples in the lab manual. The syntax is confusing, especially for loops and conditionals. Could we have a review session on these topics?</p>
+                    <div class="feedback-date">1 week ago • Lab Manual #2</div>
+                    <div class="feedback-actions">
+                        <button class="btn btn-secondary">Reply</button>
+                        <button class="btn btn-primary">Resolve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">...</button>
+            <button class="page-btn">6</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.feedback-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Here you would typically filter the feedback based on the selected tab
+            });
+        });
+
+        // Search functionality placeholder
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            // Here you would typically filter the feedback based on the search term
+            console.log('Searching for:', searchTerm);
+        });
+
+        // Filter functionality placeholder
+        const filterSelects = document.querySelectorAll('.filter-select');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', (e) => {
+                // Here you would typically filter the feedback based on the selected filters
+                console.log('Filter changed:', e.target.value);
+            });
+        });
+    </script>
+</body>
+</html>

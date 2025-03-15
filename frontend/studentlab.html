@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Lab Manuals</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 1rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .manuals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .manual-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .manual-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .manual-cover {
+            height: 160px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .manual-cover i {
+            font-size: 3rem;
+            color: #6b7280;
+        }
+
+        .manual-info {
+            padding: 15px;
+        }
+
+        .manual-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .manual-course {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 5px;
+        }
+
+        .manual-date {
+            color: #6b7280;
+            font-size: 0.75rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .manual-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .manual-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #2563eb;
+        }
+
+        .manual-btn:hover {
+            background: #ebf5ff;
+        }
+
+        .recent-manuals {
+            margin-top: 40px;
+        }
+
+        .recent-manuals h2 {
+            margin-bottom: 20px;
+        }
+
+        .recent-manual-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .recent-manual-icon {
+            background: #ebf5ff;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .recent-manual-info {
+            flex: 1;
+        }
+
+        .recent-manual-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Student Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="student dashboard.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+            <a href="student project.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="studentlab.html" class="menu-item active">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="studentcode.html" class="menu-item">
+               <i class="fas fa-code"></i>
+               Codes
+            </a>
+            <a href="stucollab.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                Collaborations
+            </a>
+            <a href="studentnotifictn.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Lab Manuals</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-upload"></i> Upload Manual
+            </button>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search lab manuals...">
+        </div>
+
+        <div class="tabs">
+            <div class="tab active">All Manuals</div>
+            <div class="tab">Computer Science</div>
+            <div class="tab">Electrical Engineering</div>
+            <div class="tab">Mechanical Engineering</div>
+            <div class="tab">Physics</div>
+            <div class="tab">Chemistry</div>
+        </div>
+
+        <div class="manuals-grid">
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Data Structures Lab</h3>
+                    <p class="manual-course">CS 201</p>
+                    <span class="manual-date">Updated Feb 25, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Digital Logic Design</h3>
+                    <p class="manual-course">EE 240</p>
+                    <span class="manual-date">Updated Jan 15, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Database Systems</h3>
+                    <p class="manual-course">CS 340</p>
+                    <span class="manual-date">Updated Mar 1, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Computer Networks</h3>
+                    <p class="manual-course">CS 450</p>
+                    <span class="manual-date">Updated Feb 10, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Machine Learning</h3>
+                    <p class="manual-course">CS 480</p>
+                    <span class="manual-date">Updated Feb 28, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manual-card">
+                <div class="manual-cover">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="manual-info">
+                    <h3 class="manual-title">Embedded Systems</h3>
+                    <p class="manual-course">EE 371</p>
+                    <span class="manual-date">Updated Jan 5, 2025</span>
+                    <div class="manual-actions">
+                        <button class="manual-btn"><i class="fas fa-download"></i> Download</button>
+                        <button class="manual-btn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-manuals">
+            <h2>Recently Viewed</h2>
+            
+            <div class="recent-manual-item">
+                <div class="recent-manual-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="recent-manual-info">
+                    <h3>Operating Systems Lab</h3>
+                    <p>CS 332 • Viewed 2 days ago</p>
+                </div>
+                <div class="recent-manual-actions">
+                    <button class="manual-btn"><i class="fas fa-download"></i></button>
+                    <button class="manual-btn"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            
+            <div class="recent-manual-item">
+                <div class="recent-manual-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="recent-manual-info">
+                    <h3>Algorithms Analysis</h3>
+                    <p>CS 325 • Viewed 5 days ago</p>
+                </div>
+                <div class="recent-manual-actions">
+                    <button class="manual-btn"><i class="fas fa-download"></i></button>
+                    <button class="manual-btn"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Filter logic would go here
+                console.log('Tab selected:', tab.textContent);
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            console.log('Searching for:', searchTerm);
+            // Search logic would go here
+        });
+        
+        // Manual card hover effect
+        const manualCards = document.querySelectorAll('.manual-card');
+        
+        manualCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

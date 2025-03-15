@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect Admin - Security</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white">
+            <div class="p-4">
+                <h1 class="text-xl font-bold">RepoConnect</h1>
+            </div>
+            <nav class="mt-4">
+                <a href="admin dashboard.html" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a>
+                <a href="resources.html" class="block px-4 py-2 bg-gray-700">Resources</a>
+                <a href="user management.html" class="block px-4 py-2 hover:bg-gray-700">User Management</a>
+                <a href="maintenance.html" class="block px-4 py-2 hover:bg-gray-700">Maintenance</a>
+                <a href="security.html" class="block px-4 py-2 hover:bg-gray-700">Security</a>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <header class="bg-white shadow">
+                <div class="px-6 py-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Security Management</h2>
+                </div>
+            </header>
+
+            <main class="p-6">
+                <!-- Security Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Security Status</h3>
+                        <p class="mt-2 text-lg font-semibold text-green-600">Protected</p>
+                        <p class="text-sm text-gray-500">Last scan: 1 hour ago</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Active Sessions</h3>
+                        <p class="mt-2 text-lg font-semibold">24</p>
+                        <p class="text-sm text-gray-500">3 new today</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">2FA Status</h3>
+                        <p class="mt-2 text-lg font-semibold text-yellow-600">92% Enabled</p>
+                        <p class="text-sm text-gray-500">4 users pending</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Active Threats</h3>
+                        <p class="mt-2 text-lg font-semibold text-red-600">2</p>
+                        <p class="text-sm text-gray-500">Requires attention</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Run Security Scan
+                    </button>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                        Revoke Suspicious Sessions
+                    </button>
+                    <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                        Configure Firewall
+                    </button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                        Enforce 2FA
+                    </button>
+                </div>
+
+                <!-- Security Events Table -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="p-4 border-b">
+                        <h3 class="text-lg font-semibold">Recent Security Events</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Event Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4">Failed Login Attempt</td>
+                                    <td class="px-6 py-4">john.doe@example.com</td>
+                                    <td class="px-6 py-4">Feb 24, 2025 10:45 AM</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                            Alert
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800 mr-2">View Details</button>
+                                        <button class="text-red-600 hover:text-red-800">Block IP</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4">New Device Login</td>
+                                    <td class="px-6 py-4">admin@repoconnect.com</td>
+                                    <td class="px-6 py-4">Feb 24, 2025 09:30 AM</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800 mr-2">View Details</button>
+                                        <button class="text-green-600 hover:text-green-800">Approve</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4">2FA Enabled</td>
+                                    <td class="px-6 py-4">sarah.smith@example.com</td>
+                                    <td class="px-6 py-4">Feb 24, 2025 09:15 AM</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Success
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800">View Details</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Additional Security Sections -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- User Access Control -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-4 border-b">
+                            <h3 class="text-lg font-semibold">User Access Control</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium">Admin Users</span>
+                                    <span class="text-gray-600">4 active</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium">Regular Users</span>
+                                    <span class="text-gray-600">28 active</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium">API Keys</span>
+                                    <span class="text-gray-600">12 active</span>
+                                </div>
+                                <button class="w-full mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                    Manage Permissions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threat Detection -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-4 border-b">
+                            <h3 class="text-lg font-semibold">Threat Detection</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="space-y-4">
+                                <div class="bg-red-50 p-3 rounded-lg">
+                                    <p class="font-medium text-red-800">Critical Alert</p>
+                                    <p class="text-sm text-red-600">Multiple failed login attempts detected from IP: 192.168.1.100</p>
+                                </div>
+                                <div class="bg-yellow-50 p-3 rounded-lg">
+                                    <p class="font-medium text-yellow-800">Warning</p>
+                                    <p class="text-sm text-yellow-600">Unusual file access pattern detected in repository</p>
+                                </div>
+                                <button class="w-full mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                                    View All Alerts
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

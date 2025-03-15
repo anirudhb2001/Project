@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+
+        .btn-outline:hover {
+            background: #ebf5ff;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .badge-success {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .badge-pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .badge-completed {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .projects-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .project-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-body {
+            padding: 20px;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .project-collaborators {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .collaborator-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -8px;
+            border: 2px solid white;
+            font-size: 0.75rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 1rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Student Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="student dashboard.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+            <a href="student project.html" class="menu-item active">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="studentlab.html" class="menu-item">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="studentcode.html" class="menu-item">
+               <i class="fas fa-code"></i>
+               Codes
+            </a>
+            <a href="stucollab.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                Collaborations
+            </a>
+            <a href="studentnotifictn.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>My Projects</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Project
+            </button>
+        </div>
+
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search projects...">
+        </div>
+
+        <div class="projects-filter">
+            <button class="filter-btn active">All Projects</button>
+            <button class="filter-btn">In Progress</button>
+            <button class="filter-btn">Completed</button>
+            <button class="filter-btn">Archived</button>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Machine Learning Algorithms</h3>
+                    <span class="badge badge-pending">In Progress</span>
+                </div>
+                <div class="project-body">
+                    <p>Implementation of common machine learning algorithms from scratch using Python.</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="project-meta">
+                        <span><i class="far fa-calendar"></i> Due: Mar 15, 2025</span>
+                        <span><i class="fas fa-code-branch"></i> 24 commits</span>
+                    </div>
+                    <div class="project-collaborators">
+                        <div class="collaborator-avatar" style="background-color: #bfdbfe;">JD</div>
+                        <div class="collaborator-avatar" style="background-color: #c7d2fe;">AS</div>
+                        <div class="collaborator-avatar" style="background-color: #ddd6fe;">MK</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Database Management System</h3>
+                    <span class="badge badge-success">Completed</span>
+                </div>
+                <div class="project-body">
+                    <p>Design and implementation of a simple relational database management system.</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="project-meta">
+                        <span><i class="far fa-calendar"></i> Completed: Feb 10, 2025</span>
+                        <span><i class="fas fa-code-branch"></i> 42 commits</span>
+                    </div>
+                    <div class="project-collaborators">
+                        <div class="collaborator-avatar" style="background-color: #bfdbfe;">JD</div>
+                        <div class="collaborator-avatar" style="background-color: #a7f3d0;">TN</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Neural Network Visualization</h3>
+                    <span class="badge badge-pending">In Progress</span>
+                </div>
+                <div class="project-body">
+                    <p>Interactive visualization tool for neural network architectures and training processes.</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 30%"></div>
+                    </div>
+                    <div class="project-meta">
+                        <span><i class="far fa-calendar"></i> Due: Apr 5, 2025</span>
+                        <span><i class="fas fa-code-branch"></i> 15 commits</span>
+                    </div>
+                    <div class="project-collaborators">
+                        <div class="collaborator-avatar" style="background-color: #ddd6fe;">MK</div>
+                        <div class="collaborator-avatar" style="background-color: #fecaca;">PL</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Compiler Design</h3>
+                    <span class="badge badge-completed">Submitted</span>
+                </div>
+                <div class="project-body">
+                    <p>Implementation of a compiler for a simple programming language.</p>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 100%"></div>
+                    </div>
+                    <div class="project-meta">
+                        <span><i class="far fa-calendar"></i> Submitted: Mar 1, 2025</span>
+                        <span><i class="fas fa-code-branch"></i> 38 commits</span>
+                    </div>
+                    <div class="project-collaborators">
+                        <div class="collaborator-avatar" style="background-color: #bfdbfe;">JD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Filter logic would go here
+                console.log('Filter selected:', button.textContent);
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            console.log('Searching for:', searchTerm);
+            // Search logic would go here
+        });
+    </script>
+</body>
+</html>

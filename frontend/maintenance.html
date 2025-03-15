@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect Admin - Maintenance</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white">
+            <div class="p-4">
+                <h1 class="text-xl font-bold">RepoConnect</h1>
+            </div>
+            <nav class="mt-4">
+                <a href="admin dashboard.html" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a>
+                <a href="user management.html" class="block px-4 py-2 bg-gray-700">User Management</a>
+                <a href="resources.html" class="block px-4 py-2 hover:bg-gray-700">Resources</a>
+                <a href="maintenance.html" class="block px-4 py-2 hover:bg-gray-700">Maintenance</a>
+                <a href="security.html" class="block px-4 py-2 hover:bg-gray-700">Security</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <header class="bg-white shadow">
+                <div class="px-6 py-4">
+                    <h2 class="text-xl font-semibold text-gray-800">System Maintenance</h2>
+                </div>
+            </header>
+
+            <main class="p-6">
+                <!-- Status Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Server Status</h3>
+                        <p class="mt-2 text-lg font-semibold text-green-600">Online</p>
+                        <p class="text-sm text-gray-500">Uptime: 99.9%</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Last Backup</h3>
+                        <p class="mt-2 text-lg font-semibold">2 hours ago</p>
+                        <p class="text-sm text-gray-500">Size: 2.3 GB</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">System Load</h3>
+                        <p class="mt-2 text-lg font-semibold">32%</p>
+                        <p class="text-sm text-gray-500">CPU Usage</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-sm font-medium text-gray-500">Active Tasks</h3>
+                        <p class="mt-2 text-lg font-semibold">3</p>
+                        <p class="text-sm text-gray-500">In Progress</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Trigger Backup
+                    </button>
+                    <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                        Clear System Logs
+                    </button>
+                    <button class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700">
+                        Schedule Downtime
+                    </button>
+                </div>
+
+                <!-- Recent Activities Table -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="p-4 border-b">
+                        <h3 class="text-lg font-semibold">Recent Maintenance Activities</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Task</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4">Database Backup</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">Feb 24, 2025 10:30 AM</td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4">Log Rotation</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            In Progress
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">Feb 24, 2025 09:15 AM</td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4">System Update</td>
+                                    <td class="px-6 py-4">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                            Failed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">Feb 23, 2025 11:45 PM</td>
+                                    <td class="px-6 py-4">
+                                        <button class="text-blue-600 hover:text-blue-800 mr-2">View Details</button>
+                                        <button class="text-red-600 hover:text-red-800">Retry</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- System Logs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-4 border-b">
+                            <h3 class="text-lg font-semibold">System Logs</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="bg-gray-100 rounded p-3 font-mono text-sm">
+                                <p>[2025-02-24 10:30:15] Backup completed successfully</p>
+                                <p>[2025-02-24 10:30:00] Starting scheduled backup</p>
+                                <p>[2025-02-24 09:15:00] Log rotation initiated</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scheduled Maintenance -->
+                    <div class="bg-white rounded-lg shadow">
+                        <div class="p-4 border-b">
+                            <h3 class="text-lg font-semibold">Scheduled Maintenance</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <p class="font-medium">Next Maintenance Window</p>
+                                <p class="text-gray-600">Feb 25, 2025 02:00 AM - 04:00 AM</p>
+                            </div>
+                            <div>
+                                <p class="font-medium">Planned Tasks</p>
+                                <ul class="list-disc list-inside text-gray-600">
+                                    <li>Security patches installation</li>
+                                    <li>Database optimization</li>
+                                    <li>Cache cleanup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

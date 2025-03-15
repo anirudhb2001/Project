@@ -1,0 +1,433 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Admin Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item active">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                User Management
+            </a>
+            <a href="projects.html" class="menu-item">
+                <i class="fas fa-project-diagram"></i>
+                Projects
+            </a>
+            <a href="manuals.html" class="menu-item">
+                <i class="fas fa-book"></i>
+                Lab Manuals
+            </a>
+            <a href="codes.html" class="menu-item">
+                <i class="fas fa-code"></i>
+                Codes
+            </a>
+            <a href="security.html" class="menu-item">
+                <i class="fas fa-shield-alt"></i>
+                Security
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <input type="text" class="search-bar" placeholder="Search...">
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="value">1,234</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Projects</h3>
+                <div class="value">56</div>
+            </div>
+            <div class="stat-card">
+                <h3>Lab Manuals</h3>
+                <div class="value">28</div>
+            </div>
+            <div class="stat-card">
+                <h3>Code Snippets</h3>
+                <div class="value">342</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>User Activity</h2>
+            <canvas id="activityChart"></canvas>
+        </div>
+
+        <div class="user-table">
+            <h2>Recent Activity</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Updated Project</td>
+                        <td>2 hours ago</td>
+                        <td><span class="badge badge-active">Completed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- users.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - User Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Same sidebar as dashboard.html with users.html active -->
+    <div class="main-content">
+        <div class="header">
+            <h1>User Management</h1>
+            <button class="btn btn-primary">Add New User</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <div class="value">1,234</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Users</h3>
+                <div class="value">987</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Approvals</h3>
+                <div class="value">23</div>
+            </div>
+            <div class="stat-card">
+                <h3>Admin Users</h3>
+                <div class="value">8</div>
+            </div>
+        </div>
+
+        <div class="user-table">
+            <h2>User List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>john@example.com</td>
+                        <td>Student</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <button class="btn">Edit</button>
+                            <button class="btn">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- projects.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Same sidebar as dashboard.html with projects.html active -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Projects</h1>
+            <button class="btn btn-primary">Create Project</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Projects</h3>
+                <div class="value">56</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Projects</h3>
+                <div class="value">42</div>
+            </div>
+            <div class="stat-card">
+                <h3>Archived</h3>
+                <div class="value">14</div>
+            </div>
+            <div class="stat-card">
+                <h3>Contributors</h3>
+                <div class="value">128</div>
+            </div>
+        </div>
+
+        <div class="user-table">
+            <h2>Project List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Owner</th>
+                        <th>Last Updated</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Web Development Lab</td>
+                        <td>Jane Smith</td>
+                        <td>2024-02-23</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <button class="btn">Edit</button>
+                            <button class="btn">Archive</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- manuals.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Lab Manuals</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Same sidebar as dashboard.html with manuals.html active -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Lab Manuals</h1>
+            <button class="btn btn-primary">Upload Manual</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Manuals</h3>
+                <div class="value">28</div>
+            </div>
+            <div class="stat-card">
+                <h3>Subjects</h3>
+                <div class="value">6</div>
+            </div>
+            <div class="stat-card">
+                <h3>Downloads</h3>
+                <div class="value">1,456</div>
+            </div>
+            <div class="stat-card">
+                <h3>Recent Updates</h3>
+                <div class="value">5</div>
+            </div>
+        </div>
+
+        <div class="user-table">
+            <h2>Manual List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Last Updated</th>
+                        <th>Downloads</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data Structures Lab</td>
+                        <td>Computer Science</td>
+                        <td>2024-02-20</td>
+                        <td>245</td>
+                        <td>
+                            <button class="btn">Edit</button>
+                            <button class="btn">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- codes.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Codes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Same sidebar as dashboard.html with codes.html active -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Code Repository</h1>
+            <button class="btn btn-primary">Add Code</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Snippets</h3>
+                <div class="value">342</div>
+            </div>
+            <div class="stat-card">
+                <h3>Languages</h3>
+                <div class="value">8</div>
+            </div>
+            <div class="stat-card">
+                <h3>Contributors</h3>
+                <div class="value">56</div>
+            </div>
+            <div class="stat-card">
+                <h3>Today's Updates</h3>
+                <div class="value">12</div>
+            </div>
+        </div>
+
+        <div class="user-table">
+            <h2>Code List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Language</th>
+                        <th>Author</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Binary Search Implementation</td>
+                        <td>Python</td>
+                        <td>Mark Wilson</td>
+                        <td><span class="badge badge-active">Approved</span></td>
+                        <td>
+                            <button class="btn">Edit</button>
+                            <button class="btn">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- security.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Security</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Same sidebar as dashboard.html with security.html active -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Security Center</h1>
+            <button class="btn btn-primary">Security Scan</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Security Score</h3>
+                <div class="value">92%</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Alerts</h3>
+                <div class="value">3</div>
+            </div>
+            <div class="stat-card">
+                <h3>Failed Logins</h3>
+                <div class="value">24</div>
+            </div>
+            <div class="stat-card">
+                <h3>Updates Available</h3>
+                <div class="value">2</div>
+            </div>
+        </div>
+
+        <div class="user-table">
+            <h2>Security Logs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Event</th>
+                        <th>IP Address</th>
+                        <th>Severity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-02-24 10:15</td>
+                        <td>Failed Login Attempt</td>
+                        <td>192.168.1.100</td>
+                        <td><span class="badge badge-pending">Medium</span></td>
+                        <td>
+                            <button class="btn">Investigate</button>
+                            <button class="btn">Block IP</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

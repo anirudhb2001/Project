@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #baae73 0%, #c4bc94 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(#baae73 1px, transparent 1px),
+                radial-gradient(#baae73 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #010914;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #010917;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            color: #525c66;
+            border-bottom: 2px solid #010917;
+            background-color: rgba(143, 128, 72, 0.316);
+        }
+
+        .tab i {
+            margin-right: 8px;
+        }
+
+        .form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #020408;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #090a0b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0a0a0b;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .form-footer a {
+            color: #0d0d0d;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            color: #010917;
+            font-size: 0.875rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #010917;
+            color: white;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            background-color: #323940;
+        }
+
+        .contact-link {
+            margin-bottom: 1rem;
+        }
+
+        .contact-link a {
+            color: #010917;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-link a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .tab {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .tab i {
+                margin-right: 4px;
+            }
+
+            .form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <div class="header">
+            <h1>RepoConnect</h1>
+            <p>Connect Collaborate Conquer!</p>
+        </div>
+        
+        <!-- Login Card -->
+        <div id="login-card" class="card">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(this, 'student')">
+                    <i class="fas fa-graduation-cap"></i>Student
+                </div>
+                <div class="tab" onclick="switchTab(this, 'faculty')">
+                    <i class="fas fa-chalkboard-teacher"></i>Faculty
+                </div>
+                <div class="tab" onclick="switchTab(this, 'admin')">
+                    <i class="fas fa-user-cog"></i>Admin
+                </div>
+            </div>
+            
+            <div class="form">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" placeholder="Email">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input" placeholder="Password">
+                </div>
+                
+                <button class="btn">Login </button>
+                
+                <div class="form-footer" id="form-footer">
+                    <a href="#" onclick="showCard('forgot-password-card')">Forgot Password?</a>
+                    <a href="#" onclick="showCard('signup-card')">Sign Up</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sign Up Card -->
+        <div id="signup-card" class="card hidden">
+            <div class="tabs">
+                <div class="tab active" onclick="switchSignupTab(this, 'student')">
+                    <i class="fas fa-graduation-cap"></i>Student
+                </div>
+                <div class="tab" onclick="switchSignupTab(this, 'faculty')">
+                    <i class="fas fa-chalkboard-teacher"></i>Faculty
+                </div>
+            </div>
+            
+            <div class="form">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-input" placeholder="Full Name">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" placeholder="Email">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input" placeholder="Password">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input" placeholder="Confirm Password">
+                </div>
+                
+                <button class="btn">Create Account</button>
+                
+                <div class="form-footer">
+                    <a href="#" onclick="showCard('login-card')">Already have an account? Sign In</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Forgot Password Card -->
+        <div id="forgot-password-card" class="card hidden">
+            <div class="form">
+                <h3 style="margin-bottom: 1rem; text-align: center; color: #010917;">Reset Your Password</h3>
+                <p style="margin-bottom: 1.5rem; text-align: center; color: #4a5568;">Enter your email address and we'll send you a link to reset your password</p>
+                
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" placeholder="Email">
+                </div>
+                
+                <button class="btn">Send Reset Link</button>
+                
+                <div class="form-footer" style="justify-content: center;">
+                    <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Us Card -->
+        <div id="contact-us-card" class="card hidden">
+            <div class="form">
+                <h3 style="margin-bottom: 1rem; text-align: center; color: #010917;">Contact Us</h3>
+                
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-input" placeholder="Full Name">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" placeholder="Email">
+                </div>
+                
+                <div class="form-group">
+                    <i class="fas fa-comment"></i>
+                    <textarea class="form-input" placeholder="Your Message" style="height: 100px; padding-top: 0.75rem; resize: none;"></textarea>
+                </div>
+                
+                <button class="btn">Send Message</button>
+                
+                <div class="form-footer" style="justify-content: center;">
+                    <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="contact-link">
+                <a href="#" onclick="showCard('contact-us-card')">Contact Us</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            
+            <p>© 2025 RepoConnect. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(element, userType) {
+            // Remove active class from all tabs
+            document.querySelectorAll('#login-card .tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            element.classList.add('active');
+            
+            // Show/hide form footer based on user type
+            const formFooter = document.getElementById('form-footer');
+            formFooter.style.display = userType === 'admin' ? 'none' : 'flex';
+        }
+        
+        function switchSignupTab(element, userType) {
+            // Remove active class from all tabs
+            document.querySelectorAll('#signup-card .tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            element.classList.add('active');
+        }
+        
+        function showCard(cardId) {
+            // Hide all cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('hidden');
+            });
+            
+            // Show the selected card
+            document.getElementById(cardId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
