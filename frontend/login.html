@@ -1,411 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RepoConnect - Login</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #baae73 0%, #c4bc94 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+      body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #baae73 0%, #c4bc94 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
-        .background-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(#baae73 1px, transparent 1px),
-                radial-gradient(#baae73 1px, transparent 1px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            opacity: 0.1;
-            pointer-events: none;
-        }
+      .background-pattern {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(#baae73 1px, transparent 1px),
+          radial-gradient(#baae73 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: 0 0, 10px 10px;
+        opacity: 0.1;
+        pointer-events: none;
+      }
 
+      .container {
+        width: 100%;
+        max-width: 440px;
+        z-index: 1;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .header h1 {
+        color: #010914;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        color: #010917;
+        font-size: 1rem;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #4a5568;
+        font-weight: 500;
+      }
+
+      .tab.active {
+        color: #525c66;
+        border-bottom: 2px solid #010917;
+        background-color: rgba(143, 128, 72, 0.316);
+      }
+
+      .tab i {
+        margin-right: 8px;
+      }
+
+      .form {
+        padding: 2rem;
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #020408;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .btn {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #090a0b;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #0a0a0b;
+      }
+
+      .form-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+      }
+
+      .form-footer a {
+        color: #0d0d0d;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .form-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .footer {
+        text-align: center;
+        color: #010917;
+        font-size: 0.875rem;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+
+      .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #010917;
+        color: white;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-icons a:hover {
+        transform: translateY(-3px);
+        background-color: #323940;
+      }
+
+      .contact-link {
+        margin-bottom: 1rem;
+      }
+
+      .contact-link a {
+        color: #010917;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .contact-link a:hover {
+        text-decoration: underline;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 480px) {
         .container {
-            width: 100%;
-            max-width: 440px;
-            z-index: 1;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            color: #010914;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #010917;
-            font-size: 1rem;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #e2e8f0;
+          padding: 0 1rem;
         }
 
         .tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #4a5568;
-            font-weight: 500;
-        }
-
-        .tab.active {
-            color: #525c66;
-            border-bottom: 2px solid #010917;
-            background-color: rgba(143, 128, 72, 0.316);
+          padding: 0.75rem 0.5rem;
+          font-size: 0.875rem;
         }
 
         .tab i {
-            margin-right: 8px;
+          margin-right: 4px;
         }
 
         .form {
-            padding: 2rem;
+          padding: 1.5rem;
         }
-
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #020408;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #090a0b;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #0a0a0b;
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .form-footer a {
-            color: #0d0d0d;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            text-align: center;
-            color: #010917;
-            font-size: 0.875rem;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0;
-        }
-
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #010917;
-            color: white;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            transform: translateY(-3px);
-            background-color: #323940;
-        }
-
-        .contact-link {
-            margin-bottom: 1rem;
-        }
-
-        .contact-link a {
-            color: #010917;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .contact-link a:hover {
-            text-decoration: underline;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .tab {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.875rem;
-            }
-
-            .tab i {
-                margin-right: 4px;
-            }
-
-            .form {
-                padding: 1.5rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="background-pattern"></div>
     <div class="container">
-        <div class="header">
-            <h1>RepoConnect</h1>
-            <p>Connect Collaborate Conquer!</p>
+      <div class="header">
+        <h1>RepoConnect</h1>
+        <p>Connect Collaborate Conquer!</p>
+      </div>
+
+      <!-- Login Card -->
+      <div id="login-card" class="card">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this, 'student')">
+            <i class="fas fa-graduation-cap"></i>Student
+          </div>
+          <div class="tab" onclick="switchTab(this, 'faculty')">
+            <i class="fas fa-chalkboard-teacher"></i>Faculty
+          </div>
+          <div class="tab" onclick="switchTab(this, 'admin')">
+            <i class="fas fa-user-cog"></i>Admin
+          </div>
         </div>
-        
-        <!-- Login Card -->
-        <div id="login-card" class="card">
-            <div class="tabs">
-                <div class="tab active" onclick="switchTab(this, 'student')">
-                    <i class="fas fa-graduation-cap"></i>Student
-                </div>
-                <div class="tab" onclick="switchTab(this, 'faculty')">
-                    <i class="fas fa-chalkboard-teacher"></i>Faculty
-                </div>
-                <div class="tab" onclick="switchTab(this, 'admin')">
-                    <i class="fas fa-user-cog"></i>Admin
-                </div>
-            </div>
-            
-            <div class="form">
-                <div class="form-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-input" placeholder="Email">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" class="form-input" placeholder="Password">
-                </div>
-                
-                <button class="btn">Login </button>
-                
-                <div class="form-footer" id="form-footer">
-                    <a href="#" onclick="showCard('forgot-password-card')">Forgot Password?</a>
-                    <a href="#" onclick="showCard('signup-card')">Sign Up</a>
-                </div>
-            </div>
+
+        <div class="form">
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" placeholder="Email" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="form-input" placeholder="Password" />
+          </div>
+
+          <button class="btn">Login</button>
+
+          <div class="form-footer" id="form-footer">
+            <a href="#" onclick="showCard('forgot-password-card')"
+              >Forgot Password?</a
+            >
+            <a href="#" onclick="showCard('signup-card')">Sign Up</a>
+          </div>
         </div>
-        
-        <!-- Sign Up Card -->
-        <div id="signup-card" class="card hidden">
-            <div class="tabs">
-                <div class="tab active" onclick="switchSignupTab(this, 'student')">
-                    <i class="fas fa-graduation-cap"></i>Student
-                </div>
-                <div class="tab" onclick="switchSignupTab(this, 'faculty')">
-                    <i class="fas fa-chalkboard-teacher"></i>Faculty
-                </div>
-            </div>
-            
-            <div class="form">
-                <div class="form-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" class="form-input" placeholder="Full Name">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-input" placeholder="Email">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" class="form-input" placeholder="Password">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" class="form-input" placeholder="Confirm Password">
-                </div>
-                
-                <button class="btn">Create Account</button>
-                
-                <div class="form-footer">
-                    <a href="#" onclick="showCard('login-card')">Already have an account? Sign In</a>
-                </div>
-            </div>
+      </div>
+
+      <!-- Sign Up Card -->
+      <div id="signup-card" class="card hidden">
+        <div class="tabs">
+          <div class="tab active" onclick="switchSignupTab(this, 'student')">
+            <i class="fas fa-graduation-cap"></i>Student
+          </div>
+          <div class="tab" onclick="switchSignupTab(this, 'faculty')">
+            <i class="fas fa-chalkboard-teacher"></i>Faculty
+          </div>
         </div>
-        
-        <!-- Forgot Password Card -->
-        <div id="forgot-password-card" class="card hidden">
-            <div class="form">
-                <h3 style="margin-bottom: 1rem; text-align: center; color: #010917;">Reset Your Password</h3>
-                <p style="margin-bottom: 1.5rem; text-align: center; color: #4a5568;">Enter your email address and we'll send you a link to reset your password</p>
-                
-                <div class="form-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-input" placeholder="Email">
-                </div>
-                
-                <button class="btn">Send Reset Link</button>
-                
-                <div class="form-footer" style="justify-content: center;">
-                    <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
-                </div>
-            </div>
+
+        <div class="form">
+          <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" class="form-input" placeholder="Full Name" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" placeholder="Email" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="form-input" placeholder="Password" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              class="form-input"
+              placeholder="Confirm Password"
+            />
+          </div>
+
+          <button class="btn">Create Account</button>
+
+          <div class="form-footer">
+            <a href="#" onclick="showCard('login-card')"
+              >Already have an account? Sign In</a
+            >
+          </div>
         </div>
-        
-        <!-- Contact Us Card -->
-        <div id="contact-us-card" class="card hidden">
-            <div class="form">
-                <h3 style="margin-bottom: 1rem; text-align: center; color: #010917;">Contact Us</h3>
-                
-                <div class="form-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" class="form-input" placeholder="Full Name">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" class="form-input" placeholder="Email">
-                </div>
-                
-                <div class="form-group">
-                    <i class="fas fa-comment"></i>
-                    <textarea class="form-input" placeholder="Your Message" style="height: 100px; padding-top: 0.75rem; resize: none;"></textarea>
-                </div>
-                
-                <button class="btn">Send Message</button>
-                
-                <div class="form-footer" style="justify-content: center;">
-                    <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
-                </div>
-            </div>
+      </div>
+
+      <!-- Forgot Password Card -->
+      <div id="forgot-password-card" class="card hidden">
+        <div class="form">
+          <h3 style="margin-bottom: 1rem; text-align: center; color: #010917">
+            Reset Your Password
+          </h3>
+          <p style="margin-bottom: 1.5rem; text-align: center; color: #4a5568">
+            Enter your email address and we'll send you a link to reset your
+            password
+          </p>
+
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" placeholder="Email" />
+          </div>
+
+          <button class="btn">Send Reset Link</button>
+
+          <div class="form-footer" style="justify-content: center">
+            <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
+          </div>
         </div>
-        
-        <div class="footer">
-            <div class="contact-link">
-                <a href="#" onclick="showCard('contact-us-card')">Contact Us</a>
-            </div>
-            
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            
-            <p>© 2025 RepoConnect. All rights reserved.</p>
+      </div>
+
+      <!-- Contact Us Card -->
+      <div id="contact-us-card" class="card hidden">
+        <div class="form">
+          <h3 style="margin-bottom: 1rem; text-align: center; color: #010917">
+            Contact Us
+          </h3>
+
+          <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" class="form-input" placeholder="Full Name" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" placeholder="Email" />
+          </div>
+
+          <div class="form-group">
+            <i class="fas fa-comment"></i>
+            <textarea
+              class="form-input"
+              placeholder="Your Message"
+              style="height: 100px; padding-top: 0.75rem; resize: none"
+            ></textarea>
+          </div>
+
+          <button class="btn">Send Message</button>
+
+          <div class="form-footer" style="justify-content: center">
+            <a href="#" onclick="showCard('login-card')">Back to Sign In</a>
+          </div>
         </div>
+      </div>
+
+      <div class="footer">
+        <div class="contact-link">
+          <a href="#" onclick="showCard('contact-us-card')">Contact Us</a>
+        </div>
+
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <p>© 2025 RepoConnect. All rights reserved.</p>
+      </div>
     </div>
 
     <script>
-        function switchTab(element, userType) {
-            // Remove active class from all tabs
-            document.querySelectorAll('#login-card .tab').forEach(tab => {
-                tab.classList.remove('active');
+      function switchTab(element, userType) {
+        // Remove active class from all tabs
+        document.querySelectorAll("#login-card .tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Add active class to clicked tab
+        element.classList.add("active");
+
+        // Show/hide form footer based on user type
+        const formFooter = document.getElementById("form-footer");
+        formFooter.style.display = userType === "admin" ? "none" : "flex";
+      }
+
+      function switchSignupTab(element, userType) {
+        // Remove active class from all tabs
+        document.querySelectorAll("#signup-card .tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Add active class to clicked tab
+        element.classList.add("active");
+      }
+
+      function showCard(cardId) {
+        // Hide all cards
+        document.querySelectorAll(".card").forEach((card) => {
+          card.classList.add("hidden");
+        });
+
+        // Show the selected card
+        document.getElementById(cardId).classList.remove("hidden");
+      }
+
+      const API_URL = "http://localhost:5000";
+      document.addEventListener("DOMContentLoaded", function () {
+        const API_URL = "http://localhost:5000"; // Update to your backend URL
+
+        // Function to handle login
+        async function handleLogin() {
+          try {
+            const email = document.querySelector(
+              ".form-input[type='email']"
+            ).value;
+            const password = document.querySelector(
+              ".form-input[type='password']"
+            ).value;
+
+            if (!email || !password) {
+              alert("Please enter both email and password");
+              return;
+            }
+
+            const response = await fetch("http://localhost:5000/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
             });
-            
-            // Add active class to clicked tab
-            element.classList.add('active');
-            
-            // Show/hide form footer based on user type
-            const formFooter = document.getElementById('form-footer');
-            formFooter.style.display = userType === 'admin' ? 'none' : 'flex';
+
+            const data = await response.json();
+            console.log("Response Data:", data);
+
+            if (response.ok) {
+              alert("Login successful!");
+
+              // Extract role correctly
+              const role = data.user.role;
+
+              // Store token and role
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("role", role);
+
+              console.log("Response Data:", data);
+              console.log("Role Received:", role);
+
+              // Redirect based on user role
+              switch (role.toLowerCase()) {
+                case "student":
+                  window.location.href =
+                    "/frontend/Student/student-dashboard.html";
+                  break;
+                case "faculty":
+                  window.location.href =
+                    "/frontend/Faculty/faculty_dashboard.html";
+                  break;
+                case "admin":
+                  window.location.href = "/frontend/Admin/admin_dashboard.html";
+                  break;
+                default:
+                  alert("Unknown role. Please contact support.");
+                  localStorage.clear();
+              }
+            } else {
+              alert(data.message || "Login failed. Please try again.");
+            }
+          } catch (error) {
+            console.error("Login error:", error);
+            alert("An error occurred during login. Please try again later.");
+          }
         }
-        
-        function switchSignupTab(element, userType) {
-            // Remove active class from all tabs
-            document.querySelectorAll('#signup-card .tab').forEach(tab => {
-                tab.classList.remove('active');
+
+        // Function to handle signup
+
+        async function handleSignup() {
+          try {
+            // Get form input fields
+            const form = document.querySelector("#signup-card");
+            if (!form) {
+              console.error("Signup form not found!");
+              alert("Signup form is missing. Please check the page.");
+              return;
+            }
+
+            const fullNameInput = form.querySelector("input[type='text']");
+            const emailInput = form.querySelector("input[type='email']");
+            const passwordInput = form.querySelector("input[type='password']");
+            const confirmPasswordInput = form.querySelector(
+              "input[placeholder='Confirm Password']"
+            );
+
+            // Debug: Log the elements
+            console.log("Full Name:", fullNameInput);
+            console.log("Email:", emailInput);
+            console.log("Password:", passwordInput);
+            console.log("Confirm Password:", confirmPasswordInput);
+
+            if (
+              !fullNameInput ||
+              !emailInput ||
+              !passwordInput ||
+              !confirmPasswordInput
+            ) {
+              console.error("One or more input fields not found!");
+              alert("Signup form is incomplete. Please refresh and try again.");
+              return;
+            }
+
+            // Get values
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+
+            if (!fullName || !email || !password || !confirmPassword) {
+              alert("Please fill in all fields.");
+              return;
+            }
+
+            if (password !== confirmPassword) {
+              alert("Passwords do not match!");
+              return;
+            }
+
+            // Get role
+            const activeTab = document.querySelector(
+              "#signup-card .tab.active"
+            );
+            const role =
+              activeTab && activeTab.textContent.includes("Student")
+                ? "student"
+                : "faculty";
+
+            console.log("Sending signup request...");
+
+            // Send API request
+            const response = await fetch(`${API_URL}/auth/signup`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                username: fullName,
+                email,
+                password,
+                role,
+              }),
             });
-            
-            // Add active class to clicked tab
-            element.classList.add('active');
+
+            const data = await response.json();
+            console.log("Signup Response:", data);
+
+            if (response.ok) {
+              alert("Signup successful! Please log in.");
+              showCard("login-card");
+            } else {
+              console.error("Signup failed:", data);
+              alert(data.message || "Signup failed. Please try again.");
+            }
+          } catch (error) {
+            console.error("Signup error:", error);
+            alert(
+              "An error occurred during signup. Please check console logs."
+            );
+          }
         }
-        
-        function showCard(cardId) {
-            // Hide all cards
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.add('hidden');
+
+        // Function to handle forgot password
+        async function handleForgotPassword() {
+          try {
+            const email = document.querySelector(
+              "#forgot-password-card .form-input"
+            ).value;
+
+            if (!email) {
+              alert("Please enter your email");
+              return;
+            }
+
+            // Note: You'll need to implement this endpoint in your backend
+            const response = await fetch(`${API_URL}/forgot-password`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
             });
-            
-            // Show the selected card
-            document.getElementById(cardId).classList.remove('hidden');
+
+            const data = await response.json();
+
+            if (response.ok) {
+              alert("Password reset link sent to your email!");
+              showCard("login-card"); // Switch back to login form
+            } else {
+              alert(
+                data.message || "Failed to send reset link. Please try again."
+              );
+            }
+          } catch (error) {
+            console.error("Forgot password error:", error);
+            alert("An error occurred. Please try again later.");
+          }
         }
+
+        // Add event listeners to buttons
+        const loginButton = document.querySelector("#login-card .btn");
+        if (loginButton) {
+          loginButton.addEventListener("click", handleLogin);
+        }
+
+        const signupButton = document.querySelector("#signup-card .btn");
+        if (signupButton) {
+          signupButton.addEventListener("click", handleSignup);
+        }
+
+        const forgotPasswordButton = document.querySelector(
+          "#forgot-password-card .btn"
+        );
+        if (forgotPasswordButton) {
+          forgotPasswordButton.addEventListener("click", handleForgotPassword);
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
