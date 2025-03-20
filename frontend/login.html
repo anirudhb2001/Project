@@ -254,7 +254,13 @@
         <div class="form">
           <div class="form-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" class="form-input" placeholder="Email" />
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="Email"
+              required
+            />
           </div>
 
           <div class="form-group">
@@ -292,7 +298,13 @@
 
           <div class="form-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" class="form-input" placeholder="Email" />
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="Email"
+              required
+            />
           </div>
 
           <div class="form-group">
@@ -434,159 +446,154 @@
 
         // Function to handle login
         async function handleLogin() {
-          try {
-            const email = document.querySelector(
-              ".form-input[type='email']"
-            ).value;
-            const password = document.querySelector(
-              ".form-input[type='password']"
-            ).value;
+          document
+            .querySelector(".btn")
+            .addEventListener("click", async function () {
+              const email = document.querySelector("#email").value.trim();
+              const password = document
+                .querySelector("input[type='password']")
+                .value.trim();
 
-            if (!email || !password) {
-              alert("Please enter both email and password");
-              return;
-            }
-
-            const response = await fetch("http://localhost:5000/auth/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-            console.log("Response Data:", data);
-
-            if (response.ok) {
-              alert("Login successful!");
-
-              // Extract role correctly
-              const role = data.user.role;
-
-              // Store token and role
-              localStorage.setItem("token", data.token);
-              localStorage.setItem("role", role);
-
-              console.log("Response Data:", data);
-              console.log("Role Received:", role);
-
-              // Redirect based on user role
-              switch (role.toLowerCase()) {
-                case "student":
-                  window.location.href =
-                    "/frontend/Student/student-dashboard.html";
-                  break;
-                case "faculty":
-                  window.location.href =
-                    "/frontend/Faculty/faculty_dashboard.html";
-                  break;
-                case "admin":
-                  window.location.href = "/frontend/Admin/admin_dashboard.html";
-                  break;
-                default:
-                  alert("Unknown role. Please contact support.");
-                  localStorage.clear();
+              if (!email || !password) {
+                alert("Please enter both email and password");
+                return;
               }
-            } else {
-              alert(data.message || "Login failed. Please try again.");
-            }
-          } catch (error) {
-            console.error("Login error:", error);
-            alert("An error occurred during login. Please try again later.");
-          }
+
+              // Basic email format validation
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address");
+                return;
+              }
+
+              try {
+                const response = await fetch(
+                  "http://localhost:5000/auth/login",
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                  }
+                );
+
+                const data = await response.json();
+                if (response.ok) {
+                  alert("Login successful!");
+
+                  // Store authentication token
+                  localStorage.setItem("token", data.token);
+                  localStorage.setItem("role", data.user.role);
+
+                  // Redirect user based on role
+                  if (data.user.role === "student") {
+                    window.location.href =
+                      "/frontend/Student/student-dashboard.html";
+                  } else if (data.user.role === "faculty") {
+                    window.location.href =
+                      "/frontend/Faculty/faculty_dashboard.html";
+                  } else if (data.user.role === "admin") {
+                    window.location.href =
+                      "/frontend/Admin/admin_dashboard.html";
+                  }
+                } else {
+                  alert(data.message || "Login failed. Please try again.");
+                }
+              } catch (error) {
+                console.error("Login error:", error);
+                alert("An error occurred. Please try again later.");
+              }
+            });
         }
 
         // Function to handle signup
 
         async function handleSignup() {
-          try {
-            // Get form input fields
-            const form = document.querySelector("#signup-card");
-            if (!form) {
-              console.error("Signup form not found!");
-              alert("Signup form is missing. Please check the page.");
-              return;
-            }
+  try {
+    // Get form input fields
+    const form = document.querySelector("#signup-card");
+    if (!form) {
+      console.error("Signup form not found!");
+      alert("Signup form is missing. Please check the page.");
+      return;
+    }
 
-            const fullNameInput = form.querySelector("input[type='text']");
-            const emailInput = form.querySelector("input[type='email']");
-            const passwordInput = form.querySelector("input[type='password']");
-            const confirmPasswordInput = form.querySelector(
-              "input[placeholder='Confirm Password']"
-            );
+    const fullNameInput = form.querySelector("input[type='text']");
+    const emailInput = form.querySelector("input[type='email']");
+    const passwordInput = form.querySelector("input[type='password']");
+    const confirmPasswordInput = form.querySelector(
+      "input[placeholder='Confirm Password']"
+    );
 
-            // Debug: Log the elements
-            console.log("Full Name:", fullNameInput);
-            console.log("Email:", emailInput);
-            console.log("Password:", passwordInput);
-            console.log("Confirm Password:", confirmPasswordInput);
+    if (
+      !fullNameInput ||
+      !emailInput ||
+      !passwordInput ||
+      !confirmPasswordInput
+    ) {
+      console.error("One or more input fields not found!");
+      alert("Signup form is incomplete. Please refresh and try again.");
+      return;
+    }
 
-            if (
-              !fullNameInput ||
-              !emailInput ||
-              !passwordInput ||
-              !confirmPasswordInput
-            ) {
-              console.error("One or more input fields not found!");
-              alert("Signup form is incomplete. Please refresh and try again.");
-              return;
-            }
+    // Get values
+    const fullName = fullNameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    const confirmPassword = confirmPasswordInput.value.trim();
 
-            // Get values
-            const fullName = fullNameInput.value.trim();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            const confirmPassword = confirmPasswordInput.value.trim();
+    if (!fullName || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
-            if (!fullName || !email || !password || !confirmPassword) {
-              alert("Please fill in all fields.");
-              return;
-            }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
-            if (password !== confirmPassword) {
-              alert("Passwords do not match!");
-              return;
-            }
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Invalid email format! Please enter a valid email.");
+      return;
+    }
 
-            // Get role
-            const activeTab = document.querySelector(
-              "#signup-card .tab.active"
-            );
-            const role =
-              activeTab && activeTab.textContent.includes("Student")
-                ? "student"
-                : "faculty";
+    // Get role
+    const activeTab = document.querySelector("#signup-card .tab.active");
+    const role =
+      activeTab && activeTab.textContent.includes("Student")
+        ? "student"
+        : "faculty";
 
-            console.log("Sending signup request...");
+    console.log("Sending signup request...");
 
-            // Send API request
-            const response = await fetch(`${API_URL}/auth/signup`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                username: fullName,
-                email,
-                password,
-                role,
-              }),
-            });
+    // Send API request
+    const response = await fetch(`${API_URL}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: fullName,
+        email,
+        password,
+        role,
+      }),
+    });
 
-            const data = await response.json();
-            console.log("Signup Response:", data);
+    const data = await response.json();
+    console.log("Signup Response:", data);
 
-            if (response.ok) {
-              alert("Signup successful! Please log in.");
-              showCard("login-card");
-            } else {
-              console.error("Signup failed:", data);
-              alert(data.message || "Signup failed. Please try again.");
-            }
-          } catch (error) {
-            console.error("Signup error:", error);
-            alert(
-              "An error occurred during signup. Please check console logs."
-            );
-          }
-        }
+    if (response.ok) {
+      alert("Signup successful! Please log in.");
+      showCard("login-card");
+    } else {
+      console.error("Signup failed:", data);
+      alert(data.message || "Signup failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Signup error:", error);
+    alert("An error occurred during signup. Please check console logs.");
+  }
+}
 
         // Function to handle forgot password
         async function handleForgotPassword() {
