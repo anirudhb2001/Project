@@ -449,31 +449,43 @@
         button.addEventListener("click", () => {
           filterButtons.forEach((btn) => btn.classList.remove("active"));
           button.classList.add("active");
-          console.log("Filter selected:", button.textContent);
+
+          const filterStatus = button.textContent.toLowerCase();
+          filterProjects(filterStatus);
         });
       });
 
-      // Live Search Functionality
-      searchInput.addEventListener("input", (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-
+      // Function to filter projects based on status
+      function filterProjects(status) {
         projectCards.forEach((card) => {
+          const badge = card.querySelector(".badge").textContent.toLowerCase();
           const projectTitle = card
             .querySelector(".project-header h3")
             .textContent.toLowerCase();
           const projectDescription = card
             .querySelector(".project-body p")
             .textContent.toLowerCase();
+          const searchTerm = searchInput.value.toLowerCase();
 
-          if (
+          const matchesStatus =
+            status === "all projects" || badge.includes(status);
+          const matchesSearch =
             projectTitle.includes(searchTerm) ||
-            projectDescription.includes(searchTerm)
-          ) {
+            projectDescription.includes(searchTerm);
+
+          if (matchesStatus && matchesSearch) {
             card.style.display = "block";
           } else {
             card.style.display = "none";
           }
         });
+      }
+
+      // Live Search Functionality
+      searchInput.addEventListener("input", () => {
+        filterProjects(
+          document.querySelector(".filter-btn.active").textContent.toLowerCase()
+        );
       });
     </script>
   </body>
