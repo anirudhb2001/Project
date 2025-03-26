@@ -251,6 +251,16 @@
         background: white;
         cursor: pointer;
       }
+
+      .reset-btn {
+        background-color: #ff4d4d;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        margin-left: 10px;
+      }
     </style>
   </head>
   <body>
@@ -311,6 +321,9 @@
 
         <!-- Select Box for Selecting Passout Year  -->
         <select id="yearSelect"></select>
+        <button id="resetFilters" class="reset-btn filter-option">
+          Reset Filters
+        </button>
       </div>
 
       <div class="projects-grid">
@@ -514,91 +527,88 @@
 
     <script>
       // Filter elements
-      const filterButtons = document.querySelectorAll(".filter-btn");
-      const searchInput = document.querySelector(".search-bar input");
-      const projectCards = document.querySelectorAll(".project-card");
-      const departmentSelect = document.getElementById("departmentSelect");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const searchInput = document.querySelector(".search-bar input");
+const projectCards = document.querySelectorAll(".project-card");
+const departmentSelect = document.getElementById("departmentSelect");
+const yearSelect = document.getElementById("yearSelect");
+const resetButton = document.getElementById("resetFilters");
 
-      // Event listeners for filters
-      filterButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          filterButtons.forEach((btn) => btn.classList.remove("active"));
-          button.classList.add("active");
+// Event listeners for filters
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
 
-          filterProjects();
-        });
-      });
+    filterProjects();
+  });
+});
 
-      searchInput.addEventListener("input", filterProjects);
-      departmentSelect.addEventListener("change", filterProjects);
+searchInput.addEventListener("input", filterProjects);
+departmentSelect.addEventListener("change", filterProjects);
+yearSelect.addEventListener("change", filterProjects);
 
-      // Function to filter projects
-      function filterProjects() {
-        const status = document
-          .querySelector(".filter-btn.active")
-          .textContent.toLowerCase();
-        const searchTerm = searchInput.value.toLowerCase();
-        const selectedDepartment = departmentSelect.value.toLowerCase();
+// Function to filter projects
+function filterProjects() {
+  const activeFilterBtn = document.querySelector(".filter-btn.active");
+  const status = activeFilterBtn ? activeFilterBtn.textContent.toLowerCase() : "";
+  const searchTerm = searchInput.value.toLowerCase();
+  const selectedDepartment = departmentSelect.value.toLowerCase();
+  const selectedYear = yearSelect.value;
 
-        projectCards.forEach((card) => {
-          const projectTitle = card
-            .querySelector(".project-header h3")
-            .textContent.toLowerCase();
-          const projectDescription = card
-            .querySelector(".project-body p")
-            .textContent.toLowerCase();
-          const department = card
-            .querySelector(".project-meta span")
-            .textContent.toLowerCase();
+  projectCards.forEach((card) => {
+    const projectTitle = card.querySelector(".project-header h3").textContent.toLowerCase();
+    const projectDescription = card.querySelector(".project-body p").textContent.toLowerCase();
+    
+    // Ensure correct <span> selection for department and year
+    const metaSpans = card.querySelectorAll(".project-meta span");
+    const department = metaSpans.length > 0 ? metaSpans[0].textContent.toLowerCase() : "";
+    const projectYear = metaSpans.length > 1 ? metaSpans[1].textContent.split(": ")[1] : "";
 
-          const matchesSearch =
-            projectTitle.includes(searchTerm) ||
-            projectDescription.includes(searchTerm);
-          const matchesDepartment =
-            selectedDepartment === "all" ||
-            department.includes(selectedDepartment);
+    const matchesSearch = projectTitle.includes(searchTerm) || projectDescription.includes(searchTerm);
+    const matchesDepartment = selectedDepartment === "all" || department.includes(selectedDepartment);
+    const matchesYear = selectedYear === "default" || selectedYear === "all" || projectYear === selectedYear;
 
-          if (matchesSearch && matchesDepartment) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      }
+    if (matchesSearch && matchesDepartment && matchesYear) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
 
-      // Live Search Functionality
-      searchInput.addEventListener("input", () => {
-        filterProjects(
-          document.querySelector(".filter-btn.active").textContent.toLowerCase()
-        );
-      });
+// Function to populate Year Dropdown
+const currentYear = new Date().getFullYear();
+const startYear = 2015; // Adjust as needed
 
-      // Function for Year Selection Dropdown
-      const yearSelect = document.getElementById("yearSelect");
-      const currentYear = new Date().getFullYear();
-      const startYear = 2015; // Adjust based on required range
+// Add default "Select Year" option
+const defaultOption = document.createElement("option");
+defaultOption.value = "default";
+defaultOption.textContent = "Select Year";
+defaultOption.disabled = true;
+defaultOption.selected = true;
+yearSelect.appendChild(defaultOption);
 
-      for (let year = currentYear; year >= startYear; year--) {
-        const option = document.createElement("option");
-        option.value = year;
-        option.textContent = `Passout Year: ${year}`;
-        yearSelect.appendChild(option);
-      }
+for (let year = currentYear; year >= startYear; year--) {
+  const option = document.createElement("option");
+  option.value = year;
+  option.textContent = `Passout Year: ${year}`;
+  yearSelect.appendChild(option);
+}
 
-      // Function to filter projects based on selected year
-      yearSelect.addEventListener("change", () => {
-        const selectedYear = yearSelect.value;
-        projectCards.forEach((card) => {
-          const projectYear = card
-            .querySelector(".project-meta span:nth-child(2)")
-            .textContent.split(": ")[1];
-          if (selectedYear === "all" || projectYear === selectedYear) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      });
+// Reset Filters Functionality
+resetButton.addEventListener("click", () => {
+  filterButtons.forEach((btn) => btn.classList.remove("active")); // Remove active filter
+  searchInput.value = ""; // Reset search bar
+  departmentSelect.value = "all"; // Reset department filter
+  yearSelect.value = "default"; // Reset year filter
+
+  // Show all projects
+  projectCards.forEach((card) => {
+    card.style.display = "block";
+  });
+});
+
     </script>
   </body>
 </html>
