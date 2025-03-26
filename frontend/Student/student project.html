@@ -149,12 +149,6 @@
         transition: all 0.3s;
       }
 
-      .filter-btn.active {
-        background: #2563eb;
-        color: white;
-        border-color: #2563eb;
-      }
-
       .projects-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -241,6 +235,22 @@
         transform: translateY(-50%);
         color: #6b7280;
       }
+
+      #departmentSelect {
+        border-radius: 50px;
+        padding-right: 5px;
+      }
+      #yearSelect {
+        border-radius: 50px;
+        padding-right: 5px;
+      }
+      .filter-option {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        background: white;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -291,8 +301,7 @@
       </div>
 
       <div class="projects-filter">
-        <button class="filter-btn active">All Projects</button>
-        <select id="departmentSelect">
+        <select id="departmentSelect" class="filter-option filter-btn active">
           <option value="all">All Departments</option>
           <option value="cse">Computer Science & Engineering</option>
           <option value="ec">Electronics & Communication</option>
