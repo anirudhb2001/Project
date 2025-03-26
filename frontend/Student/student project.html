@@ -292,16 +292,23 @@
 
       <div class="projects-filter">
         <button class="filter-btn active">All Projects</button>
-        <button class="filter-btn">In Progress</button>
-        <button class="filter-btn">Completed</button>
-        <button class="filter-btn">Archived</button>
+        <select id="departmentSelect">
+          <option value="all">All Departments</option>
+          <option value="cse">Computer Science & Engineering</option>
+          <option value="ec">Electronics & Communication</option>
+          <option value="eee">Electrical & Electronics</option>
+          <option value="civil">Civil Engineering</option>
+        </select>
+
+        <!-- Select Box for Selecting Passout Year  -->
+        <select id="yearSelect"></select>
       </div>
 
       <div class="projects-grid">
+        <!-- Card 1  -->
         <div class="project-card">
           <div class="project-header">
             <h3>Machine Learning Algorithms</h3>
-            <span class="badge badge-pending">In Progress</span>
           </div>
           <div class="project-body">
             <p>
@@ -312,8 +319,8 @@
               <div class="progress-bar-fill" style="width: 65%"></div>
             </div>
             <div class="project-meta">
-              <span><i class="far fa-calendar"></i> Due: Mar 15, 2025</span>
-              <span><i class="fas fa-code-branch"></i> 24 commits</span>
+              <span><i class="fa-solid fa-graduation-cap"></i> CSE</span>
+              <span><i class="far fa-calendar"></i> Year: 2025</span>
             </div>
             <div class="project-collaborators">
               <div
@@ -337,25 +344,61 @@
             </div>
           </div>
         </div>
-
+        <!-- Card 2  -->
         <div class="project-card">
           <div class="project-header">
-            <h3>Database Management System</h3>
-            <span class="badge badge-success">Completed</span>
+            <h3>IoT-Based Smart Home System !</h3>
           </div>
           <div class="project-body">
             <p>
-              Design and implementation of a simple relational database
-              management system.
+              Developing a smart home automation system using IoT sensors and
+              NodeMCU.
             </p>
             <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 100%"></div>
+              <div class="progress-bar-fill" style="width: 65%"></div>
             </div>
             <div class="project-meta">
-              <span
-                ><i class="far fa-calendar"></i> Completed: Feb 10, 2025</span
+              <span><i class="fa-solid fa-graduation-cap"></i> ECE</span>
+              <span><i class="far fa-calendar"></i> Year: 2024</span>
+            </div>
+            <div class="project-collaborators">
+              <div
+                class="collaborator-avatar"
+                style="background-color: #bfdbfe"
               >
-              <span><i class="fas fa-code-branch"></i> 42 commits</span>
+                RK
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #c7d2fe"
+              >
+                VS
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #ddd6fe"
+              >
+                SP
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3  -->
+        <div class="project-card">
+          <div class="project-header">
+            <h3>Solar-Powered Battery Charger !</h3>
+          </div>
+          <div class="project-body">
+            <p>
+              Design and implementation of a solar-based battery charger with an
+              efficient power controller.
+            </p>
+            <div class="progress-bar">
+              <div class="progress-bar-fill" style="width: 65%"></div>
+            </div>
+            <div class="project-meta">
+              <span><i class="fa-solid fa-graduation-cap"></i> EEE</span>
+              <span><i class="far fa-calendar"></i> Year: 2025</span>
             </div>
             <div class="project-collaborators">
               <div
@@ -366,65 +409,35 @@
               </div>
               <div
                 class="collaborator-avatar"
-                style="background-color: #a7f3d0"
+                style="background-color: #c7d2fe"
               >
-                TN
+                AS
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <h3>Neural Network Visualization</h3>
-            <span class="badge badge-pending">In Progress</span>
-          </div>
-          <div class="project-body">
-            <p>
-              Interactive visualization tool for neural network architectures
-              and training processes.
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 30%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="far fa-calendar"></i> Due: Apr 5, 2025</span>
-              <span><i class="fas fa-code-branch"></i> 15 commits</span>
-            </div>
-            <div class="project-collaborators">
               <div
                 class="collaborator-avatar"
                 style="background-color: #ddd6fe"
               >
                 MK
               </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #fecaca"
-              >
-                PL
-              </div>
             </div>
           </div>
         </div>
-
+        <!-- Card 4  -->
         <div class="project-card">
           <div class="project-header">
-            <h3>Compiler Design</h3>
-            <span class="badge badge-completed">Submitted</span>
+            <h3>Earthquake-Resistant Building Design !</h3>
           </div>
           <div class="project-body">
             <p>
-              Implementation of a compiler for a simple programming language.
+              Structural analysis and design of earthquake-resistant buildings
+              using STAAD.Pro
             </p>
             <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 100%"></div>
+              <div class="progress-bar-fill" style="width: 65%"></div>
             </div>
             <div class="project-meta">
-              <span
-                ><i class="far fa-calendar"></i> Submitted: Mar 1, 2025</span
-              >
-              <span><i class="fas fa-code-branch"></i> 38 commits</span>
+              <span><i class="fa-solid fa-graduation-cap"></i> Civil</span>
+              <span><i class="far fa-calendar"></i> Year: 2022</span>
             </div>
             <div class="project-collaborators">
               <div
@@ -432,6 +445,57 @@
                 style="background-color: #bfdbfe"
               >
                 JD
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #c7d2fe"
+              >
+                AS
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #ddd6fe"
+              >
+                MK
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5  -->
+        <div class="project-card">
+          <div class="project-header">
+            <h3>Blockchain-Based Voting System</h3>
+          </div>
+          <div class="project-body">
+            <p>
+              Developing a secure and transparent online voting system using
+              blockchain technology.
+            </p>
+            <div class="progress-bar">
+              <div class="progress-bar-fill" style="width: 65%"></div>
+            </div>
+            <div class="project-meta">
+              <span><i class="fa-solid fa-graduation-cap"></i> CSE</span>
+              <span><i class="far fa-calendar"></i> Year: 2023</span>
+            </div>
+            <div class="project-collaborators">
+              <div
+                class="collaborator-avatar"
+                style="background-color: #bfdbfe"
+              >
+                JD
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #c7d2fe"
+              >
+                AS
+              </div>
+              <div
+                class="collaborator-avatar"
+                style="background-color: #ddd6fe"
+              >
+                MK
               </div>
             </div>
           </div>
@@ -440,40 +504,52 @@
     </div>
 
     <script>
-      // Filter functionality
+      // Filter elements
       const filterButtons = document.querySelectorAll(".filter-btn");
       const searchInput = document.querySelector(".search-bar input");
       const projectCards = document.querySelectorAll(".project-card");
+      const departmentSelect = document.getElementById("departmentSelect");
 
+      // Event listeners for filters
       filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
           filterButtons.forEach((btn) => btn.classList.remove("active"));
           button.classList.add("active");
 
-          const filterStatus = button.textContent.toLowerCase();
-          filterProjects(filterStatus);
+          filterProjects();
         });
       });
 
-      // Function to filter projects based on status
-      function filterProjects(status) {
+      searchInput.addEventListener("input", filterProjects);
+      departmentSelect.addEventListener("change", filterProjects);
+
+      // Function to filter projects
+      function filterProjects() {
+        const status = document
+          .querySelector(".filter-btn.active")
+          .textContent.toLowerCase();
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedDepartment = departmentSelect.value.toLowerCase();
+
         projectCards.forEach((card) => {
-          const badge = card.querySelector(".badge").textContent.toLowerCase();
           const projectTitle = card
             .querySelector(".project-header h3")
             .textContent.toLowerCase();
           const projectDescription = card
             .querySelector(".project-body p")
             .textContent.toLowerCase();
-          const searchTerm = searchInput.value.toLowerCase();
+          const department = card
+            .querySelector(".project-meta span")
+            .textContent.toLowerCase();
 
-          const matchesStatus =
-            status === "all projects" || badge.includes(status);
           const matchesSearch =
             projectTitle.includes(searchTerm) ||
             projectDescription.includes(searchTerm);
+          const matchesDepartment =
+            selectedDepartment === "all" ||
+            department.includes(selectedDepartment);
 
-          if (matchesStatus && matchesSearch) {
+          if (matchesSearch && matchesDepartment) {
             card.style.display = "block";
           } else {
             card.style.display = "none";
@@ -486,6 +562,33 @@
         filterProjects(
           document.querySelector(".filter-btn.active").textContent.toLowerCase()
         );
+      });
+
+      // Function for Year Selection Dropdown
+      const yearSelect = document.getElementById("yearSelect");
+      const currentYear = new Date().getFullYear();
+      const startYear = 2015; // Adjust based on required range
+
+      for (let year = currentYear; year >= startYear; year--) {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = `Passout Year: ${year}`;
+        yearSelect.appendChild(option);
+      }
+
+      // Function to filter projects based on selected year
+      yearSelect.addEventListener("change", () => {
+        const selectedYear = yearSelect.value;
+        projectCards.forEach((card) => {
+          const projectYear = card
+            .querySelector(".project-meta span:nth-child(2)")
+            .textContent.split(": ")[1];
+          if (selectedYear === "all" || projectYear === selectedYear) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
       });
     </script>
   </body>
