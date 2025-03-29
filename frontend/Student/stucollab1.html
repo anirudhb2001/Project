@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepoConnect - Collaboration Requests</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #1a365d;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+
+        .menu-item.active {
+            background: #ebf5ff;
+            color: #2563eb;
+            border-right: 3px solid #2563eb;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+
+        .btn-outline:hover {
+            background: #ebf5ff;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .badge-success {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .badge-pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .badge-rejected {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .collaboration-tabs {
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab {
+            padding: 15px 25px;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid #2563eb;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.875rem;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .collaboration-list {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .collaboration-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collaboration-item:last-child {
+            border-bottom: none;
+        }
+
+        .collaboration-info {
+            flex: 1;
+        }
+
+        .collaboration-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .collaboration-meta {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .collaboration-message {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 0.875rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .collaboration-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>RepoConnect</h2>
+            <p>Student Portal</p>
+        </div>
+        <div class="sidebar-menu">
+            <a href="student dashboard.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                Dashboard
+            </a>
+            <a href="student project.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                Projects
+            </a>
+            <a href="studentlab.html" class="menu-item">
+                <i class="fas fa-file"></i>
+                Lab Manuals
+            </a>
+            <a href="studentcode.html" class="menu-item">
+               <i class="fas fa-code"></i>
+               Codes
+            </a>
+            <a href="stucollab.html" class="menu-item active">
+                <i class="fas fa-users"></i>
+                Collaborations
+            </a>
+            <a href="studentnotifictn.html" class="menu-item">
+                <i class="fas fa-bell"></i>
+                Notifications
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Collaboration Requests</h1>
+        </div>
+
+        <div class="collaboration-tabs">
+            <div class="tab active" data-target="request-form">Request Collaboration</div>
+            <div class="tab" data-target="sent-requests">Sent Requests</div>
+            <div class="tab" data-target="received-requests">Received Requests</div>
+        </div>
+
+        <div id="request-form" class="tab-content active">
+            <div class="card">
+                <h2>Send Collaboration Request</h2>
+                <p style="margin-bottom: 15px;">Request to collaborate on projects with other users</p>
+                
+                <form id="collaboration-form">
+                    <div class="form-group">
+                        <label for="project-name">Project Name*</label>
+                        <input type="text" id="project-name" class="form-control" required>
+                        <div class="error-message" id="project-name-error">Please enter a project name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collaborator-email">Collaborator's Email*</label>
+                        <input type="email" id="collaborator-email" class="form-control" required>
+                        <div class="error-message" id="collaborator-email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collaboration-message">Collaboration Message*</label>
+                        <textarea id="collaboration-message" class="form-control" required></textarea>
+                        <div class="error-message" id="collaboration-message-error">Please enter a message</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Request
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="sent-requests" class="tab-content">
+            <h2>Sent Collaboration Requests</h2>
+            <div class="collaboration-list" id="sent-requests-list">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+
+        <div id="received-requests" class="tab-content">
+            <h2>Received Collaboration Requests</h2>
+            <div class="collaboration-list" id="received-requests-list">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        const sentRequests = [
+            {
+                id: 1,
+                projectName: "Machine Learning Framework",
+                collaboratorEmail: "alex.johnson@university.edu",
+                message: "I would like to collaborate on your ML framework project. I have experience in TensorFlow and PyTorch.",
+                status: "pending"
+            },
+            {
+                id: 2,
+                projectName: "Web Scraping Tool",
+                collaboratorEmail: "maria.smith@university.edu",
+                message: "Your web scraping project looks interesting. I'd love to contribute with my Python and BeautifulSoup experience.",
+                status: "accepted"
+            },
+            {
+                id: 3,
+                projectName: "Database Optimization",
+                collaboratorEmail: "david.lee@university.edu",
+                message: "I've worked on similar database optimization projects and would like to contribute to your work.",
+                status: "rejected"
+            }
+        ];
+
+        const receivedRequests = [
+            {
+                id: 1,
+                projectName: "Neural Network Visualization",
+                requesterEmail: "emma.wilson@university.edu",
+                message: "I came across your neural network project and would love to collaborate. I have experience in data visualization and can help improve the visual aspects of your project."
+            },
+            {
+                id: 2,
+                projectName: "Distributed Computing Framework",
+                requesterEmail: "jacob.thomas@university.edu",
+                message: "I'm impressed by your distributed computing framework and would like to contribute. I have experience with parallel processing and could help optimize the performance."
+            },
+            {
+                id: 3,
+                projectName: "Cybersecurity Analysis Tool",
+                requesterEmail: "sophia.brown@university.edu",
+                message: "Your cybersecurity tool caught my interest. I've been working on similar security analysis projects and would love to collaborate."
+            }
+        ];
+
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                tabs.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const targetId = tab.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Form validation
+        const collaborationForm = document.getElementById('collaboration-form');
+        collaborationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            // Validate project name
+            const projectName = document.getElementById('project-name');
+            const projectNameError = document.getElementById('project-name-error');
+            if (!projectName.value.trim()) {
+                projectNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                projectNameError.style.display = 'none';
+            }
+            
+            // Validate collaborator email
+            const collaboratorEmail = document.getElementById('collaborator-email');
+            const collaboratorEmailError = document.getElementById('collaborator-email-error');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!collaboratorEmail.value.trim() || !emailRegex.test(collaboratorEmail.value)) {
+                collaboratorEmailError.style.display = 'block';
+                isValid = false;
+            } else {
+                collaboratorEmailError.style.display = 'none';
+            }
+            
+            // Validate collaboration message
+            const collaborationMessage = document.getElementById('collaboration-message');
+            const collaborationMessageError = document.getElementById('collaboration-message-error');
+            if (!collaborationMessage.value.trim()) {
+                collaborationMessageError.style.display = 'block';
+                isValid = false;
+            } else {
+                collaborationMessageError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                // In a real application, this would send data to the server
+                // For demo purposes, we'll add it to our local array and refresh the display
+                const newRequest = {
+                    id: sentRequests.length + 1,
+                    projectName: projectName.value,
+                    collaboratorEmail: collaboratorEmail.value,
+                    message: collaborationMessage.value,
+                    status: "pending"
+                };
+                
+                sentRequests.push(newRequest);
+                renderSentRequests();
+                
+                // Clear form
+                collaborationForm.reset();
+                
+                // Show success message
+                alert("Collaboration request sent successfully!");
+            }
+        });
+
+        // Render sent requests
+        function renderSentRequests() {
+            const sentRequestsList = document.getElementById('sent-requests-list');
+            
+            if (sentRequests.length === 0) {
+                sentRequestsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-paper-plane"></i>
+                        <p>You haven't sent any collaboration requests yet.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            sentRequestsList.innerHTML = '';
+            
+            sentRequests.forEach(request => {
+                let statusBadge = '';
+                
+                switch(request.status) {
+                    case 'pending':
+                        statusBadge = `<span class="badge badge-pending">Pending</span>`;
+                        break;
+                    case 'accepted':
+                        statusBadge = `<span class="badge badge-success">Accepted</span>`;
+                        break;
+                    case 'rejected':
+                        statusBadge = `<span class="badge badge-rejected">Rejected</span>`;
+                        break;
+                }
+                
+                const requestElement = document.createElement('div');
+                requestElement.className = 'collaboration-item';
+                requestElement.innerHTML = `
+                    <div class="collaboration-info">
+                        <h4>${request.projectName}</h4>
+                        <div class="collaboration-meta">To: ${request.collaboratorEmail}</div>
+                        <div class="collaboration-message">${request.message}</div>
+                    </div>
+                    <div class="action-buttons">
+                        ${statusBadge}
+                        ${request.status === 'pending' ? 
+                            `<button class="btn btn-outline cancel-request" data-id="${request.id}">Cancel</button>` : ''}
+                    </div>
+                `;
+                
+                sentRequestsList.appendChild(requestElement);
+            });
+            
+            // Add event listeners to cancel buttons
+            document.querySelectorAll('.cancel-request').forEach(button => {
+                button.addEventListener('click', function() {
+                    const requestId = parseInt(this.getAttribute('data-id'));
+                    // In a real application, this would send a request to the server
+                    // For demo purposes, we'll just remove it from our local array
+                    const index = sentRequests.findIndex(req => req.id === requestId);
+                    if (index !== -1) {
+                        sentRequests.splice(index, 1);
+                        renderSentRequests();
+                    }
+                });
+            });
+        }
+
+        // Render received requests
+        function renderReceivedRequests() {
+            const receivedRequestsList = document.getElementById('received-requests-list');
+            
+            if (receivedRequests.length === 0) {
+                receivedRequestsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>You haven't received any collaboration requests yet.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            receivedRequestsList.innerHTML = '';
+            
+            receivedRequests.forEach(request => {
+                const requestElement = document.createElement('div');
+                requestElement.className = 'collaboration-item';
+                requestElement.innerHTML = `
+                    <div class="collaboration-info">
+                        <h4>${request.projectName}</h4>
+                        <div class="collaboration-meta">From: ${request.requesterEmail}</div>
+                        <div class="collaboration-message">${request.message}</div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-success accept-request" data-id="${request.id}">
+                            <i class="fas fa-check"></i> Accept
+                        </button>
+                        <button class="btn btn-danger reject-request" data-id="${request.id}">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                `;
+                
+                receivedRequestsList.appendChild(requestElement);
+            });
+            
+            // Add event listeners to action buttons
+            document.querySelectorAll('.accept-request').forEach(button => {
+                button.addEventListener('click', function() {
+                    const requestId = parseInt(this.getAttribute('data-id'));
+                    // In a real application, this would send a request to the server
+                    // For demo purposes, we'll just remove it from our local array
+                    const index = receivedRequests.findIndex(req => req.id === requestId);
+                    if (index !== -1) {
+                        receivedRequests.splice(index, 1);
+                        renderReceivedRequests();
+                        alert("Collaboration request accepted!");
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.reject-request').forEach(button => {
+                button.addEventListener('click', function() {
+                    const requestId = parseInt(this.getAttribute('data-id'));
+                    // In a real application, this would send a request to the server
+                    // For demo purposes, we'll just remove it from our local array
+                    const index = receivedRequests.findIndex(req => req.id === requestId);
+                    if (index !== -1) {
+                        receivedRequests.splice(index, 1);
+                        renderReceivedRequests();
+                        alert("Collaboration request rejected.");
+                    }
+                });
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderSentRequests();
+            renderReceivedRequests();
+        });
+    </script>
+</body>
+</html>
