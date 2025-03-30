@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Project Submission</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .main-content {
+        max-width: 700px;
+        width: 100%;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-primary {
+        background: #2563eb;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+        font-size: 0.875rem;
+    }
+
+    textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .error-message {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .form-footer {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #4a5568;
+        text-align: center;
+    }
+
+    .required:after {
+        content: " *";
+        color: #ef4444;
+    }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="header">
+            <h1>Add New Project</h1>
+        </div>
+        
+        <div class="card">
+            <form id="projectForm" novalidate>
+                <div class="form-group">
+                    <label for="projectTitle" class="required">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle" class="form-control" required>
+                    <div class="error-message" id="titleError">Project title is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="required">Description</label>
+                    <textarea id="description" name="description" class="form-control" required></textarea>
+                    <div class="error-message" id="descriptionError">Description is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="department" class="required">Department</label>
+                    <select id="department" name="department" class="form-control" required>
+                        <option value="">Select Department</option>
+                        <option value="computer-science">Computer Science</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="mechanical">Mechanical</option>
+                        <option value="civil">Civil</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="biotechnology">Biotechnology</option>
+                        <option value="chemical">Chemical</option>
+                    </select>
+                    <div class="error-message" id="departmentError">Please select a department</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passoutYear" class="required">Passout Year</label>
+                    <select id="passoutYear" name="passoutYear" class="form-control" required>
+                        <option value="">Select Passout Year</option>
+                        <script>
+                            // Generate years from 2000 to 2030
+                            for (let year = 2000; year <= 2030; year++) {
+                                document.write(`<option value="${year}">${year}</option>`);
+                            }
+                        </script>
+                    </select>
+                    <div class="error-message" id="yearError">Please select a passout year</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Project</button>
+                
+                <div class="form-footer">
+                    Fields marked with * are required
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            
+            // Validate fields
+            let isValid = true;
+            
+            // Project Title
+            if (!document.getElementById('projectTitle').value.trim()) {
+                document.getElementById('titleError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Description
+            if (!document.getElementById('description').value.trim()) {
+                document.getElementById('descriptionError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Department
+            if (!document.getElementById('department').value) {
+                document.getElementById('departmentError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Passout Year
+            if (!document.getElementById('passoutYear').value) {
+                document.getElementById('yearError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // In a real application, you would submit the form data to a server here
+                this.reset();
+            }
+        });
+    </script>
+</body>
+</html>
