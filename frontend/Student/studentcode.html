@@ -1,321 +1,323 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RepoConnect - Codes</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
 
-        body {
-            min-height: 100vh;
-            background: #f5f7fa;
-            display: flex;
-        }
+      body {
+        min-height: 100vh;
+        background: #f5f7fa;
+        display: flex;
+      }
 
-        .sidebar {
-            width: 250px;
-            background: #fff;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            height: 100vh;
-        }
+      .sidebar {
+        width: 250px;
+        background: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        height: 100vh;
+      }
 
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+      }
 
-        .sidebar-header h2 {
-            color: #1a365d;
-            font-size: 1.5rem;
-        }
+      .sidebar-header h2 {
+        color: #1a365d;
+        font-size: 1.5rem;
+      }
 
-        .sidebar-menu {
-            padding: 20px 0;
-        }
+      .sidebar-menu {
+        padding: 20px 0;
+      }
 
-        .menu-item {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            color: #4a5568;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
+      .menu-item {
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        color: #4a5568;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
 
-        .menu-item:hover {
-            background: #f8fafc;
-        }
+      .menu-item:hover {
+        background: #f8fafc;
+      }
 
-        .menu-item.active {
-            background: #ebf5ff;
-            color: #2563eb;
-            border-right: 3px solid #2563eb;
-        }
+      .menu-item.active {
+        background: #ebf5ff;
+        color: #2563eb;
+        border-right: 3px solid #2563eb;
+      }
 
-        .menu-item i {
-            margin-right: 10px;
-            width: 20px;
-        }
+      .menu-item i {
+        margin-right: 10px;
+        width: 20px;
+      }
 
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            width: calc(100% - 250px);
-        }
+      .main-content {
+        margin-left: 250px;
+        padding: 20px;
+        width: calc(100% - 250px);
+      }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
 
-        .btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.3s;
-        }
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+      }
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
+      .btn-primary {
+        background: #2563eb;
+        color: white;
+      }
 
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
+      .btn-primary:hover {
+        background: #1d4ed8;
+      }
 
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #4b5563;
-        }
+      .btn-secondary {
+        background: #f3f4f6;
+        color: #4b5563;
+      }
 
-        .btn-secondary:hover {
-            background: #e5e7eb;
-        }
+      .btn-secondary:hover {
+        background: #e5e7eb;
+      }
 
-        .search-box {
-            display: flex;
-            margin-bottom: 20px;
-        }
+      .search-bar {
+        position: relative;
+        margin-bottom: 20px;
+      }
 
-        .search-box input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px 0 0 6px;
-            font-size: 0.875rem;
-        }
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        font-size: 1rem;
+      }
 
-        .search-box button {
-            padding: 10px 15px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 0 6px 6px 0;
-            cursor: pointer;
-        }
+      .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
 
-        .filter-bar {
-            display: flex;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
+      .filter-bar {
+        display: flex;
+        margin-bottom: 20px;
+        gap: 10px;
+      }
 
-        .filter-bar select {
-            padding: 8px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 0.875rem;
-        }
+      .filter-bar select {
+        padding: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 0.875rem;
+      }
 
-        .code-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
+      .code-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+      }
 
-        .code-card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+      .code-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
 
-        .code-header {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .code-header {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .code-header h3 {
-            color: #1a365d;
-        }
+      .code-header h3 {
+        color: #1a365d;
+      }
 
-        .language-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            background: #e9f5fe;
-            color: #2563eb;
-        }
+      .language-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        background: #e9f5fe;
+        color: #2563eb;
+      }
 
-        .code-body {
-            max-height: 200px;
-            overflow: auto;
-            background: #f8fafd;
-            border-bottom: 1px solid #eee;
-        }
+      .code-body {
+        max-height: 200px;
+        overflow: auto;
+        background: #f8fafd;
+        border-bottom: 1px solid #eee;
+      }
 
-        .code-body pre {
-            margin: 0;
-            padding: 0;
-        }
+      .code-body pre {
+        margin: 0;
+        padding: 0;
+      }
 
-        .code-body code {
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
+      .code-body code {
+        font-family: "Menlo", "Monaco", "Courier New", monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
 
-        .code-footer {
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .code-footer {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .code-meta {
-            font-size: 0.875rem;
-            color: #4a5568;
-        }
+      .code-meta {
+        font-size: 0.875rem;
+        color: #4a5568;
+      }
 
-        .code-actions {
-            display: flex;
-            gap: 8px;
-        }
+      .code-actions {
+        display: flex;
+        gap: 8px;
+      }
 
-        .tab-container {
-            display: flex;
-            margin-bottom: 20px;
-        }
+      .tab-container {
+        display: flex;
+        margin-bottom: 20px;
+      }
 
-        .tab {
-            padding: 10px 20px;
-            background: #f3f4f6;
-            border-radius: 6px 6px 0 0;
-            font-size: 0.875rem;
-            cursor: pointer;
-            margin-right: 2px;
-        }
+      .tab {
+        padding: 10px 20px;
+        background: #f3f4f6;
+        border-radius: 6px 6px 0 0;
+        font-size: 0.875rem;
+        cursor: pointer;
+        margin-right: 2px;
+      }
 
-        .tab.active {
-            background: #fff;
-            font-weight: bold;
-            color: #2563eb;
-            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
-        }
+      .tab.active {
+        background: #fff;
+        font-weight: bold;
+        color: #2563eb;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>RepoConnect</h2>
-            <p>Faculty Portal</p>
-        </div>
-        <div class="sidebar-menu">
-            <a href="student-dashboard.html" class="menu-item active">
-                <i class="fas fa-home"></i>
-                Dashboard
-              </a>
-              <a href="student project.html" class="menu-item">
-                <i class="fas fa-tasks"></i>
-                Projects
-              </a>
-              <a href="newproject.html" class="menu-item">
-                <i class="fas fa-plus"></i>
-                Add new project
-              </a>
-      
-              <a href="studentlab.html" class="menu-item">
-                <i class="fas fa-file"></i>
-                Lab Manuals
-              </a>
-              <a href="studentcode.html" class="menu-item">
-                <i class="fas fa-code"></i>
-                Codes
-              </a>
-              <a href="stucollab1.html" class="menu-item">
-                <i class="fas fa-users"></i>
-                Collaborations
-              </a>
-              <a href="studentnotifictn.html" class="menu-item">
-                <i class="fas fa-bell"></i>
-                Notifications
-              </a>
-        </div>
+      <div class="sidebar-header">
+        <h2>RepoConnect</h2>
+        <p>Student Portal</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="student-dashboard.html" class="menu-item active">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="student project.html" class="menu-item">
+          <i class="fas fa-tasks"></i>
+          Projects
+        </a>
+        <a href="newproject.html" class="menu-item">
+          <i class="fas fa-plus"></i>
+          Add new project
+        </a>
+
+        <a href="studentlab.html" class="menu-item">
+          <i class="fas fa-file"></i>
+          Lab Manuals
+        </a>
+        <a href="studentcode.html" class="menu-item">
+          <i class="fas fa-code"></i>
+          Codes
+        </a>
+        <a href="stucollab1.html" class="menu-item">
+          <i class="fas fa-users"></i>
+          Collaborations
+        </a>
+        <a href="studentnotifictn.html" class="menu-item">
+          <i class="fas fa-bell"></i>
+          Notifications
+        </a>
+      </div>
     </div>
 
     <div class="main-content">
-        <div class="header">
-            <h1>Code Repository</h1>
-            <button class="btn btn-primary">
-                <i class="fas fa-plus"></i> Add New Code
-            </button>
-        </div>
+      <div class="header">
+        <h1>Code Repository</h1>
+        <button class="btn btn-primary">
+          <i class="fas fa-plus"></i> Add New Code
+        </button>
+      </div>
 
-        <div class="search-box">
-            <input type="text" placeholder="Search code snippets...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search projects..." />
+      </div>
 
-        <div class="filter-bar">
-            <select>
-                <option value="">All Languages</option>
-                <option value="python">Python</option>
-                <option value="java">Java</option>
-                <option value="c++">C++</option>
-                <option value="javascript">JavaScript</option>
-            </select>
-            <select>
-                <option value="">All Courses</option>
-                <option value="cs101">CS 101</option>
-                <option value="cs250">CS 250</option>
-                <option value="cs315">CS 315</option>
-            </select>
-            <select>
-                <option value="">Sort By</option>
-                <option value="date-desc">Date (Newest)</option>
-                <option value="date-asc">Date (Oldest)</option>
-                <option value="name-asc">Name (A-Z)</option>
-            </select>
-        </div>
+      <div class="filter-bar">
+        <select>
+          <option value="">All Languages</option>
+          <option value="python">Python</option>
+          <option value="java">Java</option>
+          <option value="c++">C++</option>
+          <option value="javascript">JavaScript</option>
+        </select>
+        <select>
+          <option value="">All Courses</option>
+          <option value="cs101">CS 101</option>
+          <option value="cs250">CS 250</option>
+          <option value="cs315">CS 315</option>
+        </select>
+        <select>
+          <option value="">Sort By</option>
+          <option value="date-desc">Date (Newest)</option>
+          <option value="date-asc">Date (Oldest)</option>
+          <option value="name-asc">Name (A-Z)</option>
+        </select>
+      </div>
 
-       
-
-        <div class="code-grid">
-            <div class="code-card">
-                <div class="code-header">
-                    <h3>Bubble Sort</h3>
-                    <span class="language-badge">Python</span>
-                </div>
-                <div class="code-body">
-                    <pre><code class="language-python">
+      <div class="code-grid">
+        <div class="code-card">
+          <div class="code-header">
+            <h3>Bubble Sort</h3>
+            <span class="language-badge">Python</span>
+          </div>
+          <div class="code-body">
+            <pre><code class="language-python">
 def bubble_sort(arr):
     n = len(arr)
     
@@ -334,27 +336,33 @@ numbers = [64, 34, 25, 12, 22, 11, 90]
 sorted_numbers = bubble_sort(numbers)
 print(sorted_numbers)
                     </code></pre>
-                </div>
-                <div class="code-footer">
-                    <div class="code-meta">
-                        <div>Created: Feb 20, 2025</div>
-                        <div>Course: CS 250</div>
-                    </div>
-                    <div class="code-actions">
-                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
-                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
-                    </div>
-                </div>
+          </div>
+          <div class="code-footer">
+            <div class="code-meta">
+              <div>Created: Feb 20, 2025</div>
+              <div>Course: CS 250</div>
             </div>
+            <div class="code-actions">
+              <button class="btn btn-secondary">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="btn btn-primary">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+        </div>
 
-            <div class="code-card">
-                <div class="code-header">
-                    <h3>Binary Search</h3>
-                    <span class="language-badge">Java</span>
-                </div>
-                <div class="code-body">
-                    <pre><code class="language-java">
+        <div class="code-card">
+          <div class="code-header">
+            <h3>Binary Search</h3>
+            <span class="language-badge">Java</span>
+          </div>
+          <div class="code-body">
+            <pre><code class="language-java">
 public class BinarySearch {
     // Returns index of x if it is present in arr[],
     // else return -1
@@ -393,27 +401,33 @@ public class BinarySearch {
     }
 }
                     </code></pre>
-                </div>
-                <div class="code-footer">
-                    <div class="code-meta">
-                        <div>Created: Feb 18, 2025</div>
-                        <div>Course: CS 250</div>
-                    </div>
-                    <div class="code-actions">
-                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
-                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
-                    </div>
-                </div>
+          </div>
+          <div class="code-footer">
+            <div class="code-meta">
+              <div>Created: Feb 18, 2025</div>
+              <div>Course: CS 250</div>
             </div>
+            <div class="code-actions">
+              <button class="btn btn-secondary">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="btn btn-primary">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+        </div>
 
-            <div class="code-card">
-                <div class="code-header">
-                    <h3>Simple Web Server</h3>
-                    <span class="language-badge">JavaScript</span>
-                </div>
-                <div class="code-body">
-                    <pre><code class="language-javascript">
+        <div class="code-card">
+          <div class="code-header">
+            <h3>Simple Web Server</h3>
+            <span class="language-badge">JavaScript</span>
+          </div>
+          <div class="code-body">
+            <pre><code class="language-javascript">
 const http = require('http');
 
 // Create a server object
@@ -436,25 +450,66 @@ server.listen(PORT, () => {
 // 2. Run with: node server.js
 // 3. Open browser to http://localhost:3000
                     </code></pre>
-                </div>
-                <div class="code-footer">
-                    <div class="code-meta">
-                        <div>Created: Feb 15, 2025</div>
-                        <div>Course: CS 315</div>
-                    </div>
-                    <div class="code-actions">
-                        <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-secondary"><i class="fas fa-copy"></i></button>
-                        <button class="btn btn-primary"><i class="fas fa-download"></i></button>
-                    </div>
-                </div>
+          </div>
+          <div class="code-footer">
+            <div class="code-meta">
+              <div>Created: Feb 15, 2025</div>
+              <div>Course: CS 315</div>
             </div>
+            <div class="code-actions">
+              <button class="btn btn-secondary">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="btn btn-primary">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-bar input");
+        const codeCards = document.querySelectorAll(".code-card");
+
+        searchInput.addEventListener("input", function () {
+          const searchText = searchInput.value.toLowerCase();
+
+          codeCards.forEach((card) => {
+            const title = card
+              .querySelector(".code-header h3")
+              .textContent.toLowerCase();
+
+            const descriptionElement = card.querySelector(".code-body code");
+            const description = descriptionElement
+              ? descriptionElement.textContent.toLowerCase()
+              : "";
+
+            const badges = Array.from(
+              card.querySelectorAll(".language-badge")
+            ).map((badge) => badge.textContent.toLowerCase());
+
+            if (
+              title.includes(searchText) ||
+              description.includes(searchText) ||
+              badges.some((badge) => badge.includes(searchText))
+            ) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-</body>
+  </body>
 </html>
