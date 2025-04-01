@@ -105,27 +105,26 @@
             background: #e5e7eb;
         }
 
-        .search-box {
-            display: flex;
-            margin-bottom: 20px;
-        }
+        .search-bar {
+        position: relative;
+        margin-bottom: 20px;
+      }
 
-        .search-box input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px 0 0 6px;
-            font-size: 0.875rem;
-        }
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        font-size: 1rem;
+      }
 
-        .search-box button {
-            padding: 10px 15px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 0 6px 6px 0;
-            cursor: pointer;
-        }
+      .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
 
         .filter-bar {
             display: flex;
@@ -269,10 +268,10 @@
             </button>
         </div>
 
-        <div class="search-box">
-            <input type="text" placeholder="Search lab manuals...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search projects..." />
+          </div>
 
         <div class="filter-bar">
             <select>
@@ -377,7 +376,27 @@
     </div>
 
     <script>
-        // JavaScript functionality could be added here
+        document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.querySelector(".search-bar input");
+    const manualCards = document.querySelectorAll(".manual-card");
+
+    searchInput.addEventListener("input", function () {
+        const searchText = searchInput.value.toLowerCase();
+        
+        manualCards.forEach(card => {
+            const title = card.querySelector(".manual-header h3").textContent.toLowerCase();
+            const description = card.querySelector(".manual-body p").textContent.toLowerCase();
+            const tags = Array.from(card.querySelectorAll(".tag")).map(tag => tag.textContent.toLowerCase());
+
+            if (title.includes(searchText) || description.includes(searchText) || tags.some(tag => tag.includes(searchText))) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+});
+
     </script>
 </body>
 </html>
