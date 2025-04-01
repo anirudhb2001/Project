@@ -468,26 +468,29 @@ server.listen(PORT, () => {
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector(".search-bar input");
-        const manualCards = document.querySelectorAll(".manual-card");
+        const codeCards = document.querySelectorAll(".code-card");
 
         searchInput.addEventListener("input", function () {
           const searchText = searchInput.value.toLowerCase();
 
-          manualCards.forEach((card) => {
+          codeCards.forEach((card) => {
             const title = card
-              .querySelector(".manual-header h3")
+              .querySelector(".code-header h3")
               .textContent.toLowerCase();
-            const description = card
-              .querySelector(".manual-body p")
-              .textContent.toLowerCase();
-            const tags = Array.from(card.querySelectorAll(".tag")).map((tag) =>
-              tag.textContent.toLowerCase()
-            );
+
+            const descriptionElement = card.querySelector(".code-body code");
+            const description = descriptionElement
+              ? descriptionElement.textContent.toLowerCase()
+              : "";
+
+            const badges = Array.from(
+              card.querySelectorAll(".language-badge")
+            ).map((badge) => badge.textContent.toLowerCase());
 
             if (
               title.includes(searchText) ||
               description.includes(searchText) ||
-              tags.some((tag) => tag.includes(searchText))
+              badges.some((badge) => badge.includes(searchText))
             ) {
               card.style.display = "block";
             } else {
