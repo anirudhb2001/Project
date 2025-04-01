@@ -447,14 +447,7 @@
             });
         });
         
-        // Search functionality
-        const searchInput = document.querySelector('.search-bar input');
-        
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            console.log('Searching for:', searchTerm);
-            // Search logic would go here
-        });
+       
         
         // Manual card hover effect
         const manualCards = document.querySelectorAll('.manual-card');
@@ -468,6 +461,33 @@
                 card.style.transform = 'translateY(0)';
             });
         });
+
+        // Search 
+        document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.querySelector(".search-bar input");
+    const manualCards = document.querySelectorAll(".manual-card");
+
+    searchInput.addEventListener("input", function () {
+        const searchText = searchInput.value.toLowerCase();
+
+        manualCards.forEach((card) => {
+            const title = card.querySelector(".manual-title").textContent.toLowerCase();
+            const description = card.querySelector(".manual-course").textContent.toLowerCase();
+            const date = card.querySelector(".manual-date").textContent.toLowerCase();
+
+            if (
+                title.includes(searchText) ||
+                description.includes(searchText) ||
+                date.includes(searchText)
+            ) {
+                card.style.display = "flex"; // Ensure it remains in grid layout
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+});
+
     </script>
 </body>
 </html>
