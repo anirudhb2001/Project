@@ -1,38 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Project Submission</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RepoConnect - Create New Project</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <style>
-    * {
+      * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Arial', sans-serif;
-    }
+        font-family: "Arial", sans-serif;
+      }
 
-    body {
+      body {
         min-height: 100vh;
         background: #f5f7fa;
         display: flex;
-        justify-content: center;
+      }
+
+      .sidebar {
+        width: 250px;
+        background: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        height: 100vh;
+      }
+
+      .sidebar-header {
         padding: 20px;
-    }
+        border-bottom: 1px solid #eee;
+      }
 
-    .main-content {
-        max-width: 700px;
-        width: 100%;
-    }
+      .sidebar-header h2 {
+        color: #1a365d;
+        font-size: 1.5rem;
+      }
 
-    .header {
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .menu-item {
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        color: #4a5568;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .menu-item:hover {
+        background: #f8fafc;
+      }
+
+      .menu-item.active {
+        background: #ebf5ff;
+        color: #2563eb;
+        border-right: 3px solid #2563eb;
+      }
+
+      .menu-item i {
+        margin-right: 10px;
+        width: 20px;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 20px;
+        width: calc(100% - 250px);
+      }
+
+      .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
-    }
+      }
 
-    .btn {
+      .btn {
         padding: 8px 16px;
         border-radius: 6px;
         border: none;
@@ -42,192 +92,289 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-    }
+      }
 
-    .btn-primary {
+      .btn-primary {
         background: #2563eb;
         color: white;
-    }
+      }
 
-    .btn-primary:hover {
+      .btn-primary:hover {
         background: #1d4ed8;
-    }
+      }
 
-    .card {
+      .card {
         background: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
         padding: 20px;
-    }
+      }
 
-    .form-group {
+      .form-group {
         margin-bottom: 15px;
-    }
+      }
 
-    .form-group label {
+      .form-group label {
         display: block;
         margin-bottom: 5px;
         font-weight: 500;
-    }
+      }
 
-    .form-control {
+      .form-control {
         width: 100%;
         padding: 10px;
         border-radius: 6px;
         border: 1px solid #e2e8f0;
         font-size: 0.875rem;
-    }
+      }
 
-    textarea.form-control {
+      textarea.form-control {
         min-height: 100px;
         resize: vertical;
-    }
+      }
 
-    .error-message {
+      .error-message {
         color: #dc2626;
         font-size: 0.75rem;
         margin-top: 5px;
         display: none;
-    }
+      }
 
-    .form-footer {
+      .form-footer {
         margin-top: 10px;
         font-size: 14px;
         color: #4a5568;
         text-align: center;
-    }
+      }
 
-    .required:after {
+      .required:after {
         content: " *";
         color: #ef4444;
-    }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>RepoConnect</h2>
+        <p>Student Portal</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="student-dashboard.html" class="menu-item">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="student project.html" class="menu-item">
+          <i class="fas fa-tasks"></i>
+          Projects
+        </a>
+        <a href="newproject.html" class="menu-item active">
+          <i class="fas fa-plus"></i>
+          Add new project
+        </a>
+
+        <a href="studentlab.html" class="menu-item">
+          <i class="fas fa-file"></i>
+          Lab Manuals
+        </a>
+        <a href="studentcode.html" class="menu-item">
+          <i class="fas fa-code"></i>
+          Codes
+        </a>
+        <a href="stucollab1.html" class="menu-item">
+          <i class="fas fa-users"></i>
+          Collaborations
+        </a>
+        <a href="studentnotifictn.html" class="menu-item">
+          <i class="fas fa-bell"></i>
+          Notifications
+        </a>
+      </div>
+    </div>
+
     <div class="main-content">
-        <div class="header">
-            <h1>Add New Project</h1>
-        </div>
-        
-        <div class="card">
-            <form id="projectForm" novalidate enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="projectTitle" class="required">Project Title</label>
-                    <input type="text" id="projectTitle" name="projectTitle" class="form-control" required>
-                    <div class="error-message" id="titleError">Project title is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="description" class="required">Description</label>
-                    <textarea id="description" name="description" class="form-control" required></textarea>
-                    <div class="error-message" id="descriptionError">Description is required</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="department" class="required">Department</label>
-                    <select id="department" name="department" class="form-control" required>
-                        <option value="">Select Department</option>
-                        <option value="cse">Computer Science & Engineering</option>
-                        <option value="ec">Electronics & Communication</option>
-                        <option value="eee">Electrical & Electronics</option>
-                        <option value="civil">Civil Engineering</option>
-                    </select>
-                    <div class="error-message" id="departmentError">Please select a department</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="passoutYear" class="required">Passout Year</label>
-                    <select id="passoutYear" name="passoutYear" class="form-control" required>
-                        <option value="">Select Passout Year</option>
-                        <script>
-                            for (let year = 2000; year <= 2030; year++) {
-                                document.write('<option value="' + year + '">' + year + '</option>');
-                            }
-                        </script>
-                    </select>
-                    <div class="error-message" id="yearError">Please select a passout year</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="projectFile" class="required">Upload Project File</label>
-                    <input type="file" id="projectFile" name="projectFile" class="form-control" required>
-                    <div class="error-message" id="fileError">Please upload a project file</div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Project</button>
-                
-                <div class="form-footer">
-                    Fields marked with * are required
-                </div>
-            </form>
-        </div>
+      <div class="header">
+        <h1>Create Project</h1>
+      </div>
+      <div class="card">
+        <form id="projectForm" novalidate enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="projectTitle" class="required">Project Title</label>
+            <input
+              type="text"
+              id="projectTitle"
+              name="projectTitle"
+              class="form-control"
+              required
+            />
+            <div class="error-message" id="titleError">
+              Project title is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="required">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              class="form-control"
+              required
+            ></textarea>
+            <div class="error-message" id="descriptionError">
+              Description is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="department" class="required">Department</label>
+            <select
+              id="department"
+              name="department"
+              class="form-control"
+              required
+            >
+              <option value="">Select Department</option>
+              <option value="cse">Computer Science & Engineering</option>
+              <option value="ec">Electronics & Communication</option>
+              <option value="eee">Electrical & Electronics</option>
+              <option value="civil">Civil Engineering</option>
+            </select>
+            <div class="error-message" id="departmentError">
+              Please select a department
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="passoutYear" class="required">Passout Year</label>
+            <select
+              id="passoutYear"
+              name="passoutYear"
+              class="form-control"
+              required
+            >
+              <option value="">Select Passout Year</option>
+              <script>
+                for (let year = 2010; year <= 2025; year++) {
+                  document.write(
+                    '<option value="' + year + '">' + year + "</option>"
+                  );
+                }
+              </script>
+            </select>
+            <div class="error-message" id="yearError">
+              Please select a passout year
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="projectFile" class="required"
+              >Upload Project File</label
+            >
+            <input
+              type="file"
+              id="projectFile"
+              name="projectFile"
+              class="form-control"
+              required
+            />
+            <div class="error-message" id="fileError">
+              Please upload a project file
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Submit Project
+          </button>
+
+          <div class="form-footer">Fields marked with * are required</div>
+        </form>
+      </div>
     </div>
 
     <script>
-        document.getElementById('projectForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Clear previous error messages
-            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
-    
-            let isValid = true;
-    
-            // Field validation
-            if (!document.getElementById('projectTitle').value.trim()) {
-                document.getElementById('titleError').style.display = 'block';
-                isValid = false;
+      document
+        .getElementById("projectForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Clear previous error messages
+          document
+            .querySelectorAll(".error-message")
+            .forEach((el) => (el.style.display = "none"));
+
+          let isValid = true;
+
+          // Field validation
+          if (!document.getElementById("projectTitle").value.trim()) {
+            document.getElementById("titleError").style.display = "block";
+            isValid = false;
+          }
+
+          if (!document.getElementById("description").value.trim()) {
+            document.getElementById("descriptionError").style.display = "block";
+            isValid = false;
+          }
+
+          if (!document.getElementById("department").value) {
+            document.getElementById("departmentError").style.display = "block";
+            isValid = false;
+          }
+
+          if (!document.getElementById("passoutYear").value) {
+            document.getElementById("yearError").style.display = "block";
+            isValid = false;
+          }
+
+          if (!document.getElementById("projectFile").files.length) {
+            document.getElementById("fileError").style.display = "block";
+            isValid = false;
+          }
+
+          if (!isValid) return;
+
+          // Create FormData object to send files
+          let formData = new FormData();
+          formData.append(
+            "projectTitle",
+            document.getElementById("projectTitle").value
+          );
+          formData.append(
+            "description",
+            document.getElementById("description").value
+          );
+          formData.append(
+            "department",
+            document.getElementById("department").value
+          );
+          formData.append(
+            "passoutYear",
+            document.getElementById("passoutYear").value
+          );
+          formData.append(
+            "projectFile",
+            document.getElementById("projectFile").files[0]
+          );
+
+          try {
+            let response = await fetch("http://localhost:5000/api/project", {
+              method: "POST",
+              body: formData,
+            });
+
+            let data = await response.json();
+
+            if (response.ok) {
+              alert("Project uploaded successfully!");
+              document.getElementById("projectForm").reset();
+            } else {
+              alert("Error: " + data.message);
             }
-            
-            if (!document.getElementById('description').value.trim()) {
-                document.getElementById('descriptionError').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (!document.getElementById('department').value) {
-                document.getElementById('departmentError').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (!document.getElementById('passoutYear').value) {
-                document.getElementById('yearError').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (!document.getElementById('projectFile').files.length) {
-                document.getElementById('fileError').style.display = 'block';
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-    
-            // Create FormData object to send files
-            let formData = new FormData();
-            formData.append("projectTitle", document.getElementById("projectTitle").value);
-            formData.append("description", document.getElementById("description").value);
-            formData.append("department", document.getElementById("department").value);
-            formData.append("passoutYear", document.getElementById("passoutYear").value);
-            formData.append("projectFile", document.getElementById("projectFile").files[0]);
-    
-            try {
-                let response = await fetch("http://localhost:5000/api/project", {
-                    method: "POST",
-                    body: formData,
-                });
-    
-                let data = await response.json();
-    
-                if (response.ok) {
-                    alert("Project uploaded successfully!");
-                    document.getElementById("projectForm").reset();
-                } else {
-                    alert("Error: " + data.message);
-                }
-            } catch (error) {
-                console.error("Error submitting form:", error);
-                alert("An error occurred. Please try again.");
-            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("An error occurred. Please try again.");
+          }
         });
     </script>
-</body>
+  </body>
 </html>

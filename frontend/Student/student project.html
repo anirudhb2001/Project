@@ -305,9 +305,11 @@
     <div class="main-content">
       <div class="header">
         <h1>My Projects</h1>
-        <button class="btn btn-primary">
-          <i class="fas fa-plus"></i> New Project
-        </button>
+        <a href="newproject.html">
+          <button class="btn btn-primary">
+            <i class="fas fa-plus"></i> New Project
+          </button></a
+        >
       </div>
 
       <div class="search-bar">
@@ -403,7 +405,7 @@
         }
 
         const currentYear = new Date().getFullYear();
-        const startYear = 2015;
+        const startYear = 2010;
         yearSelect.innerHTML = `<option value="default" selected>Select Year</option>`;
         for (let year = currentYear; year >= startYear; year--) {
           yearSelect.innerHTML += `<option value="${year}">Passout Year: ${year}</option>`;
