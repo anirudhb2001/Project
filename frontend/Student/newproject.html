@@ -145,7 +145,7 @@
                         <option value="">Select Passout Year</option>
                         <script>
                             for (let year = 2000; year <= 2030; year++) {
-                                document.write(<option value="${year}">${year}</option>);
+                                document.write('<option value="' + year + '">' + year + '</option>');
                             }
                         </script>
                     </select>
@@ -168,13 +168,15 @@
     </div>
 
     <script>
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
+        document.getElementById('projectForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Clear previous error messages
             document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
-            
+    
             let isValid = true;
-            
+    
+            // Field validation
             if (!document.getElementById('projectTitle').value.trim()) {
                 document.getElementById('titleError').style.display = 'block';
                 isValid = false;
@@ -200,9 +202,33 @@
                 isValid = false;
             }
             
-            if (isValid) {
-                alert('Form submitted successfully!');
-                this.reset();
+            if (!isValid) return;
+    
+            // Create FormData object to send files
+            let formData = new FormData();
+            formData.append("projectTitle", document.getElementById("projectTitle").value);
+            formData.append("description", document.getElementById("description").value);
+            formData.append("department", document.getElementById("department").value);
+            formData.append("passoutYear", document.getElementById("passoutYear").value);
+            formData.append("projectFile", document.getElementById("projectFile").files[0]);
+    
+            try {
+                let response = await fetch("http://localhost:5000/api/project", {
+                    method: "POST",
+                    body: formData,
+                });
+    
+                let data = await response.json();
+    
+                if (response.ok) {
+                    alert("Project uploaded successfully!");
+                    document.getElementById("projectForm").reset();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("An error occurred. Please try again.");
             }
         });
     </script>
