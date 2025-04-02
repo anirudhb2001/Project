@@ -282,6 +282,7 @@
           <i class="fas fa-plus"></i>
           Add new project
         </a>
+
         <a href="studentlab.html" class="menu-item">
           <i class="fas fa-file"></i>
           Lab Manuals
@@ -290,7 +291,7 @@
           <i class="fas fa-code"></i>
           Codes
         </a>
-        <a href="stucollab.html" class="menu-item">
+        <a href="stucollab1.html" class="menu-item">
           <i class="fas fa-users"></i>
           Collaborations
         </a>
@@ -311,164 +312,115 @@
 
       <div class="search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search projects..." />
+        <input type="text" id="searchInput" placeholder="Search projects..." />
       </div>
 
       <div class="projects-filter">
-        <select id="departmentSelect" class="filter-option filter-btn active">
+        <select id="departmentSelect" class="filter-option">
           <option value="all">All Departments</option>
           <option value="cse">Computer Science & Engineering</option>
           <option value="ec">Electronics & Communication</option>
           <option value="eee">Electrical & Electronics</option>
           <option value="civil">Civil Engineering</option>
         </select>
-
-        <!-- Select Box for Selecting Passout Year  -->
         <select id="yearSelect"></select>
-        <button id="resetFilters" class="reset-btn filter-option">
-          Reset Filters
-        </button>
+        <button id="resetFilters" class="reset-btn">Reset Filters</button>
       </div>
 
-      
-        
-        <div id="projectContainer" class="projects-grid"></div>
-
-      </div>
-    
-
+      <div id="projectContainer" class="projects-grid"></div>
+    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-          const projectContainer = document.getElementById("projectContainer"); // Replace with actual container ID
-  
+        const projectContainer = document.getElementById("projectContainer");
+        const searchInput = document.getElementById("searchInput");
+        const departmentSelect = document.getElementById("departmentSelect");
+        const yearSelect = document.getElementById("yearSelect");
+        const resetButton = document.getElementById("resetFilters");
+
+        async function fetchProjects() {
           try {
-              const response = await fetch("http://localhost:5000/api/project");
-              const projects = await response.json();
-  
-              if (!Array.isArray(projects)) {
-                  console.error("Invalid project data:", projects);
-                  return;
-              }
-  
-              projectContainer.innerHTML = ""; // Clear existing content
-  
-              projects.forEach((project) => {
-                  const projectCard = document.createElement("div");
-                  projectCard.classList.add("project-card");
-  
-                  projectCard.innerHTML = `
-                      <div class="project-header">
-                          <h3>${project.title}</h3>
-                      </div>
-                      <div class="project-body">
-                          <p>${project.description}</p>
-                          <div class="progress-bar">
-                              <div class="progress-bar-fill" style="width: 65%"></div>
-                          </div>
-                          <div class="project-meta">
-                              <span><i class="fa-solid fa-graduation-cap"></i> ${project.department}</span>
-                              <span><i class="far fa-calendar"></i> Year: ${project.passout_year}</span>
-                          </div>
-                          <a href="http://localhost:5000${project.file}" target="_blank" class="btn btn-primary" download>
-                              Download Project
-                          </a>
-                      </div>
-                  `;
-  
-                  projectContainer.appendChild(projectCard);
-              });
+            const response = await fetch("http://localhost:5000/api/project");
+            const projects = await response.json();
+            renderProjects(projects);
           } catch (error) {
-              console.error("Error fetching projects:", error);
+            console.error("Error fetching projects:", error);
           }
+        }
+
+        function renderProjects(projects) {
+          projectContainer.innerHTML = "";
+          projects.forEach((project) => {
+            const projectCard = document.createElement("div");
+            projectCard.classList.add("project-card");
+            projectCard.dataset.department = project.department.toLowerCase();
+            projectCard.dataset.year = project.passout_year;
+
+            projectCard.innerHTML = `
+                        <div class="project-header">
+                            <h3>${project.title}</h3>
+                        </div>
+                        <div class="project-body">
+                            <p>${project.description}</p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 65%"></div>
+                            </div>
+                            <div class="project-meta">
+                                <span><i class="fa-solid fa-graduation-cap"></i> ${project.department}</span>
+                                <span><i class="far fa-calendar"></i> Year: ${project.passout_year}</span>
+                            </div>
+                            <a href="http://localhost:5000/uploads/${project.file}" target="_blank" class="btn btn-primary">View File</a>
+                        </div>
+                    `;
+            projectContainer.appendChild(projectCard);
+          });
+          filterProjects();
+        }
+
+        function filterProjects() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const selectedDepartment = departmentSelect.value.toLowerCase();
+          const selectedYear = yearSelect.value;
+
+          document.querySelectorAll(".project-card").forEach((card) => {
+            const matchesSearch = card
+              .querySelector(".project-header h3")
+              .textContent.toLowerCase()
+              .includes(searchTerm);
+            const matchesDepartment =
+              selectedDepartment === "all" ||
+              card.dataset.department.includes(selectedDepartment);
+            const matchesYear =
+              selectedYear === "default" ||
+              selectedYear === "all" ||
+              card.dataset.year === selectedYear;
+
+            card.style.display =
+              matchesSearch && matchesDepartment && matchesYear
+                ? "block"
+                : "none";
+          });
+        }
+
+        const currentYear = new Date().getFullYear();
+        const startYear = 2015;
+        yearSelect.innerHTML = `<option value="default" selected>Select Year</option>`;
+        for (let year = currentYear; year >= startYear; year--) {
+          yearSelect.innerHTML += `<option value="${year}">Passout Year: ${year}</option>`;
+        }
+
+        searchInput.addEventListener("input", filterProjects);
+        departmentSelect.addEventListener("change", filterProjects);
+        yearSelect.addEventListener("change", filterProjects);
+        resetButton.addEventListener("click", () => {
+          searchInput.value = "";
+          departmentSelect.value = "all";
+          yearSelect.value = "default";
+          filterProjects();
+        });
+
+        fetchProjects();
       });
-  </script>
-  
-
-    <script>
-      // Filter elements
-const filterButtons = document.querySelectorAll(".filter-btn");
-const searchInput = document.querySelector(".search-bar input");
-const projectCards = document.querySelectorAll(".project-card");
-const departmentSelect = document.getElementById("departmentSelect");
-const yearSelect = document.getElementById("yearSelect");
-const resetButton = document.getElementById("resetFilters");
-
-// Event listeners for filters
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach((btn) => btn.classList.remove("active"));
-    button.classList.add("active");
-
-    filterProjects();
-  });
-});
-
-searchInput.addEventListener("input", filterProjects);
-departmentSelect.addEventListener("change", filterProjects);
-yearSelect.addEventListener("change", filterProjects);
-
-// Function to filter projects
-function filterProjects() {
-  const activeFilterBtn = document.querySelector(".filter-btn.active");
-  const status = activeFilterBtn ? activeFilterBtn.textContent.toLowerCase() : "";
-  const searchTerm = searchInput.value.toLowerCase();
-  const selectedDepartment = departmentSelect.value.toLowerCase();
-  const selectedYear = yearSelect.value;
-
-  projectCards.forEach((card) => {
-    const projectTitle = card.querySelector(".project-header h3").textContent.toLowerCase();
-    const projectDescription = card.querySelector(".project-body p").textContent.toLowerCase();
-    
-    // Ensure correct <span> selection for department and year
-    const metaSpans = card.querySelectorAll(".project-meta span");
-    const department = metaSpans.length > 0 ? metaSpans[0].textContent.toLowerCase() : "";
-    const projectYear = metaSpans.length > 1 ? metaSpans[1].textContent.split(": ")[1] : "";
-
-    const matchesSearch = projectTitle.includes(searchTerm) || projectDescription.includes(searchTerm);
-    const matchesDepartment = selectedDepartment === "all" || department.includes(selectedDepartment);
-    const matchesYear = selectedYear === "default" || selectedYear === "all" || projectYear === selectedYear;
-
-    if (matchesSearch && matchesDepartment && matchesYear) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
-  });
-}
-
-// Function to populate Year Dropdown
-const currentYear = new Date().getFullYear();
-const startYear = 2015; // Adjust as needed
-
-// Add default "Select Year" option
-const defaultOption = document.createElement("option");
-defaultOption.value = "default";
-defaultOption.textContent = "Select Year";
-defaultOption.disabled = true;
-defaultOption.selected = true;
-yearSelect.appendChild(defaultOption);
-
-for (let year = currentYear; year >= startYear; year--) {
-  const option = document.createElement("option");
-  option.value = year;
-  option.textContent = `Passout Year: ${year}`;
-  yearSelect.appendChild(option);
-}
-
-// Reset Filters Functionality
-resetButton.addEventListener("click", () => {
-  filterButtons.forEach((btn) => btn.classList.remove("active")); // Remove active filter
-  searchInput.value = ""; // Reset search bar
-  departmentSelect.value = "all"; // Reset department filter
-  yearSelect.value = "default"; // Reset year filter
-
-  // Show all projects
-  projectCards.forEach((card) => {
-    card.style.display = "block";
-  });
-});
-
     </script>
   </body>
 </html>

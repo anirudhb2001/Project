@@ -1,15 +1,18 @@
 import express from "express";
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";  // Import dotenv
+import dotenv from "dotenv";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Load environment variables
-dotenv.config();  
+dotenv.config();
 
 import ProjectRoutes from "./Routes/projectRoute.js";
 import AuthRoutes from "./routes/auth.js";
 
+// Ensure uploads directory exists
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
@@ -18,16 +21,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Debugging: Check if MONGO_URI is loaded
+// Convert ES Module __dirname (for static file serving)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve uploaded files as static
+app.use("/uploads", express.static("uploads"));
+
+// Debugging: Ensure MONGO_URI is set
 if (!process.env.MONGO_URI) {
   console.error("❌ MONGO_URI is undefined. Check your .env file.");
   process.exit(1);
 }
 
 // MongoDB Connection
-connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Error:", err);
+    process.exit(1);
+  });
 
 // Routes
 app.use("/auth", AuthRoutes);
