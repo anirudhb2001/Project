@@ -330,204 +330,60 @@
         </button>
       </div>
 
-      <div class="projects-grid">
-        <!-- Card 1  -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3>Machine Learning Algorithms</h3>
-          </div>
-          <div class="project-body">
-            <p>
-              Implementation of common machine learning algorithms from scratch
-              using Python.
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 65%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="fa-solid fa-graduation-cap"></i> CSE</span>
-              <span><i class="far fa-calendar"></i> Year: 2025</span>
-            </div>
-            <div class="project-collaborators">
-              <div
-                class="collaborator-avatar"
-                style="background-color: #bfdbfe"
-              >
-                JD
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #c7d2fe"
-              >
-                AS
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #ddd6fe"
-              >
-                MK
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 2  -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3>IoT-Based Smart Home System !</h3>
-          </div>
-          <div class="project-body">
-            <p>
-              Developing a smart home automation system using IoT sensors and
-              NodeMCU.
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 65%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="fa-solid fa-graduation-cap"></i> ECE</span>
-              <span><i class="far fa-calendar"></i> Year: 2024</span>
-            </div>
-            <div class="project-collaborators">
-              <div
-                class="collaborator-avatar"
-                style="background-color: #bfdbfe"
-              >
-                RK
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #c7d2fe"
-              >
-                VS
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #ddd6fe"
-              >
-                SP
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 3  -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3>Solar-Powered Battery Charger !</h3>
-          </div>
-          <div class="project-body">
-            <p>
-              Design and implementation of a solar-based battery charger with an
-              efficient power controller.
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 65%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="fa-solid fa-graduation-cap"></i> EEE</span>
-              <span><i class="far fa-calendar"></i> Year: 2025</span>
-            </div>
-            <div class="project-collaborators">
-              <div
-                class="collaborator-avatar"
-                style="background-color: #bfdbfe"
-              >
-                JD
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #c7d2fe"
-              >
-                AS
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #ddd6fe"
-              >
-                MK
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 4  -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3>Earthquake-Resistant Building Design !</h3>
-          </div>
-          <div class="project-body">
-            <p>
-              Structural analysis and design of earthquake-resistant buildings
-              using STAAD.Pro
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 65%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="fa-solid fa-graduation-cap"></i> Civil</span>
-              <span><i class="far fa-calendar"></i> Year: 2022</span>
-            </div>
-            <div class="project-collaborators">
-              <div
-                class="collaborator-avatar"
-                style="background-color: #bfdbfe"
-              >
-                JD
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #c7d2fe"
-              >
-                AS
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #ddd6fe"
-              >
-                MK
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Card 5  -->
-        <div class="project-card">
-          <div class="project-header">
-            <h3>Blockchain-Based Voting System</h3>
-          </div>
-          <div class="project-body">
-            <p>
-              Developing a secure and transparent online voting system using
-              blockchain technology.
-            </p>
-            <div class="progress-bar">
-              <div class="progress-bar-fill" style="width: 65%"></div>
-            </div>
-            <div class="project-meta">
-              <span><i class="fa-solid fa-graduation-cap"></i> CSE</span>
-              <span><i class="far fa-calendar"></i> Year: 2023</span>
-            </div>
-            <div class="project-collaborators">
-              <div
-                class="collaborator-avatar"
-                style="background-color: #bfdbfe"
-              >
-                JD
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #c7d2fe"
-              >
-                AS
-              </div>
-              <div
-                class="collaborator-avatar"
-                style="background-color: #ddd6fe"
-              >
-                MK
-              </div>
-            </div>
-          </div>
-        </div>
+      
+        
+        <div id="projectContainer" class="projects-grid"></div>
+
       </div>
-    </div>
+    
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+          const projectContainer = document.getElementById("projectContainer"); // Replace with actual container ID
+  
+          try {
+              const response = await fetch("http://localhost:5000/api/project");
+              const projects = await response.json();
+  
+              if (!Array.isArray(projects)) {
+                  console.error("Invalid project data:", projects);
+                  return;
+              }
+  
+              projectContainer.innerHTML = ""; // Clear existing content
+  
+              projects.forEach((project) => {
+                  const projectCard = document.createElement("div");
+                  projectCard.classList.add("project-card");
+  
+                  projectCard.innerHTML = `
+                      <div class="project-header">
+                          <h3>${project.title}</h3>
+                      </div>
+                      <div class="project-body">
+                          <p>${project.description}</p>
+                          <div class="progress-bar">
+                              <div class="progress-bar-fill" style="width: 65%"></div>
+                          </div>
+                          <div class="project-meta">
+                              <span><i class="fa-solid fa-graduation-cap"></i> ${project.department}</span>
+                              <span><i class="far fa-calendar"></i> Year: ${project.passout_year}</span>
+                          </div>
+                          <a href="http://localhost:5000${project.file}" target="_blank" class="btn btn-primary" download>
+                              Download Project
+                          </a>
+                      </div>
+                  `;
+  
+                  projectContainer.appendChild(projectCard);
+              });
+          } catch (error) {
+              console.error("Error fetching projects:", error);
+          }
+      });
+  </script>
+  
 
     <script>
       // Filter elements
