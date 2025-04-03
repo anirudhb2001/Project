@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 dotenv.config();
 
 import ProjectRoutes from "./Routes/projectRoute.js";
-import AuthRoutes from "./routes/auth.js";
+import AuthRoutes from "../backend_/Routes/auth.js";
 
 // Ensure uploads directory exists
 if (!fs.existsSync("uploads")) {
@@ -50,5 +50,5 @@ mongoose
 app.use("/auth", AuthRoutes);
 app.use("/api/project", ProjectRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

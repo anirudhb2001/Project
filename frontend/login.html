@@ -440,9 +440,9 @@
         document.getElementById(cardId).classList.remove("hidden");
       }
 
-      const API_URL = "http://localhost:5000";
+      const API_URL = "http://localhost:5500";
       document.addEventListener("DOMContentLoaded", function () {
-        const API_URL = "http://localhost:5000"; // Update to your backend URL
+        const API_URL = "http://localhost:5500"; // Update to your backend URL
 
         // Function to handle login
         async function handleLogin() {
@@ -468,7 +468,7 @@
 
               try {
                 const response = await fetch(
-                  "http://localhost:5000/auth/login",
+                  "http://localhost:5500/auth/login",
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

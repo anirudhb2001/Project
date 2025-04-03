@@ -340,7 +340,7 @@
 
         async function fetchProjects() {
           try {
-            const response = await fetch("http://localhost:5000/api/project");
+            const response = await fetch("http://localhost:5500/api/project");
             const projects = await response.json();
             renderProjects(projects);
           } catch (error) {
@@ -369,7 +369,7 @@
                                 <span><i class="fa-solid fa-graduation-cap"></i> ${project.department}</span>
                                 <span><i class="far fa-calendar"></i> Year: ${project.passout_year}</span>
                             </div>
-                            <a href="http://localhost:5000/uploads/${project.file}" target="_blank" class="btn btn-primary">View File</a>
+                            <a href="http://localhost:5500/uploads/${project.file}" target="_blank" class="btn btn-primary">View File</a>
                         </div>
                     `;
             projectContainer.appendChild(projectCard);
