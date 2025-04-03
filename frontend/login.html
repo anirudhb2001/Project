@@ -487,13 +487,13 @@
                   // Redirect user based on role
                   if (data.user.role === "student") {
                     window.location.href =
-                      "/Project/frontend/Student/student-dashboard.html";
+                      "/Repo-Connect/Project/frontend/Student/student-dashboard.html";
                   } else if (data.user.role === "faculty") {
                     window.location.href =
-                      "/Project/frontend/Faculty/faculty_dashboard.html";
+                      "/Repo-Connect/Project/frontend/Faculty/faculty_dashboard.html";
                   } else if (data.user.role === "admin") {
                     window.location.href =
-                      "/Project/frontend/Admin/admin_dashboard.html";
+                      "/Repo-Connect/Project/frontend/Admin/admin_dashboard.html";
                   }
                 } else {
                   alert(data.message || "Login failed. Please try again.");
